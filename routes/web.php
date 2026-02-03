@@ -93,6 +93,22 @@ Route::middleware('auth')->group(function () {
             'exportExcel'
         ])->name('backend-warga.export.excel');
 
+        Route::get('backend-keuangan-rt{rt}', 
+        [App\Http\Controllers\Backend\Website\KeuanganController::class, 'index']
+        );
+
+        Route::post('backend-keuangan/bayar',
+            [App\Http\Controllers\Backend\Website\KeuanganController::class, 'bayar']
+        )->name('backend-keuangan.bayar');
+
+        Route::get('/export/pdf/{rt}', 
+        [App\Http\Controllers\Backend\Website\KeuanganController::class, 'exportPdf']
+        )->name('backend-keuangan.exportPdf');
+
+        Route::get('/export/excel/{rt}',
+            [App\Http\Controllers\Backend\Website\KeuanganController::class, 'exportExcel']
+        )->name('backend-keuangan.exportExcel');
+
 
         ///// PENGGUNA \\\\\
         Route::resources([

@@ -92,6 +92,30 @@
                 </ul>
             </li>
 
+            <li class="nav-item">
+                <a class="d-flex align-items-center" href="#">
+                    <i data-feather="dollar-sign"></i>
+                    <span class="menu-title text-truncate">Keuangan</span>
+                </a>
+
+                <ul class="menu-content">
+
+                    @for($i = 1; $i <= 8; $i++)
+                        @php $rt = sprintf('%02d', $i); @endphp
+
+                        <li class="nav-item {{ request()->is('backend-keuangan-rt'.$rt) ? 'active' : '' }}">
+                            <a class="d-flex align-items-center"
+                            href="{{ url('backend-keuangan-rt'.$rt) }}">
+                                <i data-feather="circle"></i>
+                                <span class="menu-item text-truncate">RT {{ $rt }}</span>
+                            </a>
+                        </li>
+
+                    @endfor
+
+                </ul>
+            </li>
+
             {{-- MENU KETUA RW --}}
             @elseif(Auth::user()->role == 'Ketua RW')
             <li class="nav-item active">

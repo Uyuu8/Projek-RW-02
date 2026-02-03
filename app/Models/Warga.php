@@ -28,4 +28,9 @@ class Warga extends Model
         'status_warga'
     ];
 
+    public function iurans()
+    {
+        return $this->hasMany(Iuran::class);
+    }
+
 }

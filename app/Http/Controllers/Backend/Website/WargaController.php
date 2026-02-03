@@ -161,4 +161,9 @@ class WargaController extends Controller
             'data-warga-rw-02.xlsx'
         );
     }
+
+    public function iurans()
+    {
+        return $this->hasMany(Iuran::class);
+    }
 }
