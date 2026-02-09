@@ -135,6 +135,14 @@
             </div>
 
             <div class="form-group">
+                <label>Status Rumah</label>
+                <select name="status_rumah" class="form-control" required>
+                    <option value="Menetap">Menetap</option>
+                    <option value="Kontrak">Kontrak</option>
+                </select>
+            </div>
+
+            <div class="form-group">
                 <label>Status Warga</label>
                 <select name="status_warga" class="form-control" required>
                     <option value="Aktif">Aktif</option>

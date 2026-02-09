@@ -103,7 +103,7 @@
                             <label>Pendidikan</label>
                             <select name="pendidikan" class="form-control">
                                 <option value="">-- Pilih --</option>
-                                @foreach (['Dasar','Menengah','Tinggi'] as $item)
+                                @foreach (['Tidak Sekolah','SD','SMP','SMA/SMK','D3','S1','S2'] as $item)
                                     <option value="{{ $item }}"
                                         {{ old('pendidikan',$warga->pendidikan)==$item?'selected':'' }}>
                                         {{ $item }}
@@ -159,6 +159,19 @@
                             <label>No HP</label>
                             <input type="text" name="no_hp" class="form-control"
                                    value="{{ old('no_hp', $warga->no_hp) }}">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Status Rumah</label>
+                            <select name="status_rumah" class="form-control">
+                                <option value="">-- Pilih --</option>
+                                @foreach (['Menetap','Kontrak'] as $item)
+                                    <option value="{{ $item }}"
+                                        {{ old('status_rumah',$warga->status_rumah)==$item?'selected':'' }}>
+                                        {{ $item }}
+                                    </option>
+                                @endforeach
+                            </select>
                         </div>
 
                         <div class="form-group">

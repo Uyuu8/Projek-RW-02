@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use PDF;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\WargaExport;
+use App\Imports\WargaImport;
 
 class WargaController extends Controller
 {
@@ -57,6 +58,7 @@ class WargaController extends Controller
             'tanggal_lahir'   => 'required|date',
             'jenis_kelamin'   => 'required|in:Laki-laki,Perempuan',
             'rt'              => 'required|in:01,02,03,04,05,06,07,08',
+            'status_rumah'    => 'required',
             'status_warga'    => 'required|in:Aktif,Pindah,Meninggal',
         ]);
 
@@ -76,6 +78,7 @@ class WargaController extends Controller
             'status_perkawinan' => $request->status_perkawinan,
             'pekerjaan'         => $request->pekerjaan,
             'no_hp'             => $request->no_hp,
+            'status_rumah'      => $request->status_rumah,
             'status_warga'      => $request->status_warga,
         ]);
 
@@ -98,6 +101,7 @@ class WargaController extends Controller
             'tanggal_lahir'   => 'required|date',
             'jenis_kelamin'   => 'required|in:Laki-laki,Perempuan',
             'rt'              => 'required|in:01,02,03,04,05,06,07,08',
+            'status_rumah'    => 'required',
             'status_warga'    => 'required|in:Aktif,Pindah,Meninggal',
         ]);
 
@@ -117,6 +121,7 @@ class WargaController extends Controller
             'status_perkawinan' => $request->status_perkawinan,
             'pekerjaan'         => $request->pekerjaan,
             'no_hp'             => $request->no_hp,
+            'status_rumah'      => $request->status_rumah,
             'status_warga'      => $request->status_warga,
         ]);
 
@@ -160,6 +165,17 @@ class WargaController extends Controller
             new WargaExport($request->rt),
             'data-warga-rw-02.xlsx'
         );
+    }
+
+    public function import(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|mimes:xlsx,xls'
+        ]);
+
+        Excel::import(new WargaImport, $request->file('file'));
+
+        return redirect()->back()->with('success','Data warga berhasil diimport');
     }
 
     public function iurans()

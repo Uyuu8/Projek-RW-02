@@ -93,6 +93,11 @@ Route::middleware('auth')->group(function () {
             'exportExcel'
         ])->name('backend-warga.export.excel');
 
+        Route::post('/backend-warga/import',[
+            App\Http\Controllers\Backend\Website\WargaController::class,
+            'import'])
+        ->name('backend-warga.import');
+
         Route::get('backend-keuangan-rt{rt}', 
         [App\Http\Controllers\Backend\Website\KeuanganController::class, 'index']
         );
