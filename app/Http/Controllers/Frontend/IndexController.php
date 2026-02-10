@@ -11,6 +11,7 @@ use App\Models\KategoriBerita;
 use App\Models\User;
 use App\Models\Warga;
 use Carbon\Carbon;
+use App\Models\Inventaris;
 
 class IndexController extends Controller
 {
@@ -352,5 +353,10 @@ public function statistikPendidikan(Request $request)
         'rw','listRt','statistik','total'
     ));
 }
+        public function InformasiInventaris()
+        {
+            $inventaris = Inventaris::orderBy('created_at', 'desc')->get();
+            return view('frontend.content.informasi.inventaris', compact('inventaris'));
+        }
 
 }

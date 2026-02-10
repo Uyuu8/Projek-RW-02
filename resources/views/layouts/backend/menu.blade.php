@@ -57,6 +57,14 @@
                 </a>
             </li>
             
+            <li class="nav-item {{ request()->is('backend-inventaris*') ? 'active' : '' }}">
+                <a class="d-flex align-items-center"
+                href="{{ route('backend.website.inventaris.index') }}">
+                    <i data-feather="archive"></i>
+                    <span class="menu-item text-truncate">Inventaris RW</span>
+                </a>
+            </li>
+            
             <li class=" nav-item">
                 <a class="d-flex align-items-center" href="#"><i data-feather="file-text"></i>
                     <span class="menu-title text-truncate" data-i18n="Card">Berita</span>
