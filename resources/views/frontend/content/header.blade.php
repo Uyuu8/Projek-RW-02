@@ -66,6 +66,7 @@
             <a href="{{ route('login') }}" class="menu-list--btn" style="background-color: #0085d2; color:white">LOGIN</a>
             @endauth
         </div>
-    </div>
+        <!-- commit -->
+    </div> 
 </div>
 
