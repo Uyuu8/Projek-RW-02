@@ -1,3 +1,6 @@
+<button id="mobileMenuToggle" class="mobile-menu-btn">
+    ☰
+</button>
 <div class="main-menu menu-fixed menu-dark menu-accordion menu-shadow" data-scroll-to-active="true">
     <div class="navbar-header">
         <ul class="nav navbar-nav flex-row">

@@ -16,8 +16,7 @@
 <!-- END: Head-->
 
 <!-- BEGIN: Body-->
-
-<body class="vertical-layout vertical-menu-modern  navbar-floating footer-static  " data-open="click" data-menu="vertical-menu-modern" data-col="">
+<body class="vertical-layout vertical-menu-modern navbar-floating footer-static" data-open="click" data-menu="vertical-menu-modern" data-col="">
 
     <!-- BEGIN: Header-->
     @include('layouts.backend.header')
@@ -51,5 +50,23 @@
     @yield('scripts')
 </body>
 <!-- END: Body-->
+
+<script>
+function handleSidebar() {
+    if (window.innerWidth < 992) {
+        document.body.classList.add("menu-collapsed");
+    } else {
+        document.body.classList.remove("menu-collapsed");
+    }
+}
+
+// run saat load
+handleSidebar();
+
+// run saat resize
+window.addEventListener("resize", handleSidebar);
+</script>
+
+
 
 </html>

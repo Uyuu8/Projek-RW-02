@@ -1,0 +1,123 @@
+/* ===================================
+   GLOBAL FIX
+=================================== */
+*{
+    box-sizing: border-box;
+}
+
+/* ===================================
+   TABLE CRUD RESPONSIVE
+=================================== */
+.table-responsive{
+    overflow-x:auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.table th,
+.table td{
+    white-space: nowrap;
+    vertical-align: middle;
+}
+
+/* foto profile */
+.table img{
+    width:50px;
+    height:50px;
+    object-fit:cover;
+    border-radius:8px;
+}
+
+/* tombol */
+.table .btn-sm{
+    padding:4px 10px;
+    font-size:12px;
+}
+
+/* ===================================
+   MOBILE OPTIMIZATION
+=================================== */
+@media (max-width:768px){
+
+    .hide-mobile{
+        display:none;
+    }
+
+    .table th,
+    .table td{
+        font-size:12px;
+        padding:8px;
+    }
+
+    h4{
+        font-size:18px;
+    }
+}
+
+/* ===================================
+   FORCE HORIZONTAL SCROLL
+=================================== */
+
+.table-responsive {
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* PAKSA TABLE LEBIH LEBAR DARI MOBILE */
+.table-responsive table {
+    min-width: 900px;   /* penting */
+}
+
+/* biar isi tidak turun baris */
+.table th,
+.table td {
+    white-space: nowrap;
+    vertical-align: middle;
+}
+/* ===================================
+   FORCE TABLE SCROLL MOBILE
+=================================== */
+
+/* container scroll */
+.table-responsive{
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* INI KUNCINYA — jangan biarkan table mengecil */
+.table-responsive table{
+    width: max-content !important;
+    min-width: 1000px;   /* bebas: 900–1200 */
+}
+
+/* jangan pecah baris */
+.table th,
+.table td{
+    white-space: nowrap;
+}
+.card-body{
+    overflow-x: auto;
+}
+
+/* =====================================
+   FORCE MOBILE HORIZONTAL SCROLL
+===================================== */
+
+.custom-scroll-table {
+    display: block !important;
+    width: 100% !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* PAKSA TABLE LEBIH LEBAR DARI HP */
+.custom-scroll-table table {
+    width: 1200px !important;   /* FIXED WIDTH = pasti overflow */
+    max-width: none !important;
+}
+
+/* jangan pecah baris */
+.custom-scroll-table th,
+.custom-scroll-table td {
+    white-space: nowrap;
+}
