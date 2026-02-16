@@ -25,7 +25,8 @@ class Warga extends Model
         'status_perkawinan',
         'pekerjaan',
         'no_hp',
-        'status_warga'
+        'status_warga',
+        'status_rumah'
     ];
 
     public function iurans()
