@@ -30,6 +30,8 @@
 <link rel="stylesheet" href="{{asset('Assets/Frontend/style.css')}}">
 <!-- Modernizr Js -->
 <script src="{{asset('Assets/Frontend/js/modernizr-2.8.3.min.js')}}"></script>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
 
 <!-- OrgChart CSS -->
 <link href="{{ asset('orgchart/jquery.orgchart.css') }}" rel="stylesheet">
