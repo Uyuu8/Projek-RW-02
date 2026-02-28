@@ -52,7 +52,8 @@ class WargaController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nik'             => 'required|unique:wargas,nik',
+            'nik'             => 'required|digits:16|unique:wargas,nik',
+            'no_kk'           => 'nullable|digits:16',
             'nama_lengkap'    => 'required',
             'tempat_lahir'    => 'required',
             'tanggal_lahir'   => 'required|date',
@@ -95,7 +96,8 @@ class WargaController extends Controller
     public function update(Request $request, Warga $warga)
     {
         $request->validate([
-            'nik'             => 'required|unique:wargas,nik,' . $warga->id,
+            'nik'             => 'required|digits:16|unique:wargas,nik,' . $warga->id,
+            'no_kk'           => 'nullable|digits:16',
             'nama_lengkap'    => 'required',
             'tempat_lahir'    => 'required',
             'tanggal_lahir'   => 'required|date',
@@ -176,10 +178,5 @@ class WargaController extends Controller
         Excel::import(new WargaImport, $request->file('file'));
 
         return redirect()->back()->with('success','Data warga berhasil diimport');
-    }
-
-    public function iurans()
-    {
-        return $this->hasMany(Iuran::class);
     }
 }

@@ -39,6 +39,13 @@
                 </a>
 
                 <div class="dropdown-menu dropdown-menu-right">
+
+                    @role('Admin')
+                    <a class="dropdown-item" href="{{ route('backend-audit.index') }}">
+                        <i class="mr-50" data-feather="activity"></i> Activity Log
+                    </a>
+                    @endrole
+                    
                     <a class="dropdown-item" href="{{route('profile-settings.index')}}">
                         <i class="mr-50" data-feather="user"></i> Profile
                     </a>

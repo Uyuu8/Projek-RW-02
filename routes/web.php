@@ -114,6 +114,10 @@ Route::middleware('auth')->group(function () {
             [App\Http\Controllers\Backend\Website\KeuanganController::class, 'exportExcel']
         )->name('backend-keuangan.exportExcel');
 
+        Route::get('backend-audit',
+            [App\Http\Controllers\Backend\AuditLogController::class, 'index']
+        )->name('backend-audit.index');
+
 
         ///// PENGGUNA \\\\\
         Route::resources([

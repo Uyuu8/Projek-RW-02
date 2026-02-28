@@ -10,12 +10,25 @@
 
             <div class="form-group">
                 <label>NIK</label>
-                <input type="text" name="nik" class="form-control" required>
+                <input type="text"
+                name="nik"
+                class="form-control"
+                maxlength="16"
+                pattern="\d{16}"
+                inputmode="numeric"
+                oninput="this.value=this.value.replace(/[^0-9]/g,'')"
+                required>
             </div>
 
             <div class="form-group">
                 <label>No KK</label>
-                <input type="text" name="no_kk" class="form-control">
+                <input type="text"
+                name="no_kk"
+                class="form-control"
+                maxlength="16"
+                pattern="\d{16}"
+                inputmode="numeric"
+                oninput="this.value=this.value.replace(/[^0-9]/g,'')">
             </div>
 
             <div class="form-group">
@@ -67,11 +80,11 @@
                     </div>
                 </div>
                 <div class="col-md-6">
-                    <div class="form-group">
-                        <label>RW</label>
-                        <input type="hidden" name="rw" value="02">
-                    </div>
+                <div class="form-group">
+                    <label>RW</label>
+                    <input type="text" name="rw" value="02" class="form-control" readonly>
                 </div>
+            </div>
             </div>
 
             <div class="row">

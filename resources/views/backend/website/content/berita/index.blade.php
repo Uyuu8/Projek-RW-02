@@ -62,7 +62,7 @@
                                                         <td> {{$key+1}} </td>
                                                         <td> {{$beritas->title}} </td>
                                                         <td> 
-                                                            <img src="{{asset('storage/images/berita/' .$beritas->thumbnail)}}" class="img-responsive" style="max-width: 50px; max-height:50px"> 
+                                                            <img src="{{ asset('images/berita/'.$beritas->thumbnail) }}" class="img-responsive" style="max-width: 50px; max-height:50px"> 
                                                         </td>
                                                         <td> {{$beritas->kategori->nama}} </td>
                                                         <td> {{$beritas->is_active == '0' ? 'Publish' : 'Draft'}} </td>
