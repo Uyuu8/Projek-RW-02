@@ -35,7 +35,7 @@
                     <div class="col-lg-3 col-md-4 col-sm-6 col-12">
                         <div class="card shadow-sm border-0 h-100" style="border-radius: 0;">
                             <div class="card-img-top">
-                                <img src="{{ asset('storage/images/berita/' . $beritas->thumbnail) }}" 
+                                <img src="{{ asset('images/berita/' . $beritas->thumbnail) }}" 
                                      class="img-fluid" 
                                      alt="{{ $beritas->title }}" 
                                      style="height: 180px; object-fit: cover; border-radius: 0;">

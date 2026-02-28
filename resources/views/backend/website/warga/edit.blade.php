@@ -34,14 +34,27 @@
 
                         <div class="form-group">
                             <label>NIK</label>
-                            <input type="text" name="nik" class="form-control"
-                                   value="{{ old('nik', $warga->nik) }}" required>
+                            <input type="text"
+                            name="nik"
+                            class="form-control"
+                            value="{{ old('nik', $warga->nik) }}"
+                            maxlength="16"
+                            pattern="\d{16}"
+                            inputmode="numeric"
+                            oninput="this.value=this.value.replace(/[^0-9]/g,'')"
+                            required>
                         </div>
 
                         <div class="form-group">
                             <label>No KK</label>
-                            <input type="text" name="no_kk" class="form-control"
-                                   value="{{ old('no_kk', $warga->no_kk) }}">
+                            <input type="text"
+                            name="no_kk"
+                            class="form-control"
+                            value="{{ old('no_kk', $warga->no_kk) }}"
+                            maxlength="16"
+                            pattern="\d{16}"
+                            inputmode="numeric"
+                            oninput="this.value=this.value.replace(/[^0-9]/g,'')">
                         </div>
 
                         <div class="form-group">
@@ -96,7 +109,7 @@
                         <div class="form-group">
                             <label>RW</label>
                             <input type="text" name="rw" class="form-control"
-                                   value="{{ old('rw', $warga->rw) }}" required>
+                                   value="{{ old('rw', $warga->rw) }}" readonly>
                         </div>
 
                         <div class="form-group">

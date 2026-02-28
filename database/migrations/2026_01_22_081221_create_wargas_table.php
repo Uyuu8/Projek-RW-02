@@ -15,7 +15,7 @@ class CreateWargasTable extends Migration
     {
         Schema::create('wargas', function (Blueprint $table) {
             $table->id();
-            $table->string('nik')->unique();
+            $table->char('nik', 16)->unique();
             $table->string('nama_lengkap');
             $table->enum('jenis_kelamin', ['Laki-laki', 'Perempuan']);
             $table->string('tempat_lahir');
@@ -23,7 +23,7 @@ class CreateWargasTable extends Migration
             $table->text('alamat');
             $table->string('rt');
             $table->string('rw');
-            $table->string('no_kk');
+            $table->char('no_kk', 16)->nullable();
             $table->enum('pendidikan', [
                 'Tidak Sekolah',
                 'SD',
