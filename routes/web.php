@@ -38,6 +38,10 @@ Route::get('/', [App\Http\Controllers\Frontend\IndexController::class, 'index'])
             [App\Http\Controllers\Frontend\IndexController::class, 'statistikPendidikan'])
         ->name('statistik.pendidikan');
 
+        Route::get('/inventaris', 
+            [App\Http\Controllers\Frontend\IndexController::class, 'InformasiInventaris'])
+        ->name('informasi.inventaris');
+
 
 
         /// BERITA \\\
@@ -82,6 +86,15 @@ Route::middleware('auth')->group(function () {
         )->parameters([
             'backend-warga' => 'warga'
         ]);
+
+        Route::resource(
+            'backend-inventaris',
+            Backend\Website\InventarisController::class
+        )
+        ->parameters([
+            'backend-inventaris' => 'inventari'
+        ])
+        ->names('backend.website.inventaris');
 
         Route::get('backend-warga/export/pdf', [
             App\Http\Controllers\Backend\Website\WargaController::class,
