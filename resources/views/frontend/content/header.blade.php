@@ -2,8 +2,8 @@
 <div class="main-nav shadow-sm" style="background-color: #0085d2;">
     <div class="main-nav--logo" style="display:flex;align-items:center;gap:15px;">
         <!-- Logo -->
-        <a href="/"><img src="{{ asset('images/LOGO KOTA BANDUNG.png') }}" alt="Logo Kota Bandung" width="55px"></a>
-         <a href="/"><img src="{{ asset('images/JADI RW.png') }}" alt="Logo RW 02" width="60px"></a>
+        <img src="{{ asset('images/LOGO KOTA BANDUNG.png') }}" alt="Logo Kota Bandung" width="55px">
+        <img src="{{ asset('images/JADI RW.png') }}" alt="Logo RW 02" width="60px">
     </div>
 
     <div class="rw-toggle" onclick="openMenu()">☰</div>
@@ -53,7 +53,7 @@
         <div class="main-nav--menu-list menu-list--dropdown" style="background-color: #0085d2;">
             <button type="button" class="menu-list--btn" style="background-color: #0085d2 !important; color:white !important; border-radius:16px;padding:12px;"onmouseenter="this.style.setProperty('background-color','#119cd2','important'); this.style.setProperty('color','#ffffffff','important');"onmouseleave="this.style.setProperty('background-color','#0085d2','important'); this.style.setProperty('color','white','important');">INFORMASI</button>
              <div class="menu-list--dropdown-content" style="background-color: #119cd2;border-radius:16px;padding:12px;">
-                <a href="#" class="dropdown-content--list" style="background-color: #119cd2; color:white">INVENTARIS RT</a>
+                <a href="{{route('informasi.inventaris')}}" class="dropdown-content--list" style="background-color: #119cd2; color:white">INVENTARIS RT</a>
                 <a href="#" class="dropdown-content--list" style="background-color: #119cd2; color:white">AGENDA RT</a>
                 <a href="#" class="dropdown-content--list" style="background-color: #119cd2; color:white">PELAYANAN WARGA</a>
                 <a href="{{ route('berita') }}" class="dropdown-content--list" style="background-color: #119cd2; color:white">BERITA</a>
