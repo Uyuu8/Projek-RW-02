@@ -49,7 +49,7 @@
 
                         <td>
                             @if($user->foto_profile)
-                                <img src="{{ asset('uploads/profile/'.$user->foto_profile) }}" width="60">
+                                <img src="{{ asset('images/profile/'.$user->foto_profile) }}" width="60">
                             @else
                                 -
                             @endif

@@ -66,6 +66,7 @@
                 <option value="Sekretaris" {{ $user->role == 'Sekretaris' ? 'selected' : '' }}>Sekretaris</option>
                 <option value="Bendahara" {{ $user->role == 'Bendahara' ? 'selected' : '' }}>Bendahara</option>
                 <option value="Tarka" {{ $user->role == 'Tarka' ? 'selected' : '' }}>Tarka</option>
+                <option value="PKK" {{ $user->role == 'PKK' ? 'selected' : '' }}>PKK</option>
             </select>
         </div>
     </div>
@@ -98,7 +99,7 @@
 @if($user->foto_profile)
 <div class="mt-2">
     <label>Foto Saat Ini:</label><br>
-    <img src="{{ asset('uploads/user/'.$user->foto_profile) }}" 
+    <img src="{{ asset('images/profile/'.$user->foto_profile) }}" 
          width="120" 
          class="img-thumbnail">
 </div>

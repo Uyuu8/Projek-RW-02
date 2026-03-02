@@ -27,7 +27,8 @@ class WargaController extends Controller
             $query->where(function ($q) use ($search) {
                 $q->where('nama_lengkap', 'like', "%{$search}%")
                   ->orWhere('nik', 'like', "%{$search}%")
-                  ->orWhere('no_kk', 'like', "%{$search}%");
+                  ->orWhere('no_kk', 'like', "%{$search}%")
+                  ->orWhere('status_keluarga', 'like', "%{$search}%");
             });
         }
 
