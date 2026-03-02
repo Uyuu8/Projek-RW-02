@@ -12,6 +12,7 @@ use App\Models\User;
 use App\Models\Warga;
 use Carbon\Carbon;
 use App\Models\Inventaris;
+use App\Models\Iuran;
 
 class IndexController extends Controller
 {
@@ -40,29 +41,26 @@ class IndexController extends Controller
 
 
     public function kontak()
-{
+    {
 
-    return view('frontend.content.kontak');
-}
+        return view('frontend.content.kontak');
+    }
 
-public function faq()
-{
+    public function faq()
+    {
 
-    return view('frontend.content.faq');
-}
-public function strukturOrganisasi()
-{
-    return view('frontend.content.strukturOrganisasi');
-}
+        return view('frontend.content.faq');
+    }
+    public function strukturOrganisasi()
+    {
+        return view('frontend.content.strukturOrganisasi');
+    }
 
-public function kepengurusan()
-{
+    public function kepengurusan()
+    {
 
-    return view('frontend.content.kepengurusan');
-}
-
-
-
+        return view('frontend.content.kepengurusan');
+    }
 
     // Berita
     public function berita(Request $request)
@@ -125,234 +123,263 @@ public function kepengurusan()
     }
 
     public function statistikWarga(Request $request)
-{
-    $rw = '02';
+    {
+        $rw = '02';
 
-    $query = Warga::where('rw', $rw);
+        $query = Warga::where('rw', $rw);
 
-    // list RT untuk dropdown
-    $listRt = Warga::where('rw', $rw)
-                ->select('rt')
-                ->distinct()
-                ->orderBy('rt')
-                ->pluck('rt');
+        // list RT untuk dropdown
+        $listRt = Warga::where('rw', $rw)
+                    ->select('rt')
+                    ->distinct()
+                    ->orderBy('rt')
+                    ->pluck('rt');
 
-    // filter RT
-    if ($request->filled('rt')) {
-        $query->where('rt', $request->rt);
+        // filter RT
+        if ($request->filled('rt')) {
+            $query->where('rt', $request->rt);
+        }
+
+        $data = $query->get();
+
+        // tabel statistik (per RT)
+        $statistik = $data->groupBy('rt')->map(function ($items) {
+            return [
+                'jumlah' => $items->count(),
+                'laki' => $items->where('jenis_kelamin', 'Laki-laki')->count(),
+                'perempuan' => $items->where('jenis_kelamin', 'Perempuan')->count(),
+                'tetap' => $items->where('status_warga', 'Aktif')->count(),
+                'tidak_tetap' => $items->where('status_warga', 'Pindah')->count(),
+            ];
+        })
+        ->sortKeys(SORT_NATURAL);
+
+        //data KHUSUS untuk chart (hasil filter)
+        $chart = [
+            'laki' => $data->where('jenis_kelamin', 'Laki-laki')->count(),
+            'perempuan' => $data->where('jenis_kelamin', 'Perempuan')->count(),
+            'tetap' => $data->where('status_warga', 'Aktif')->count(),
+            'tidak_tetap' => $data->where('status_warga', 'Pindah')->count(),
+        ];
+
+        // total tabel
+        $total = [
+            'jumlah' => $data->count(),
+            'laki' => $chart['laki'],
+            'perempuan' => $chart['perempuan'],
+            'tetap' => $chart['tetap'],
+            'tidak_tetap' => $chart['tidak_tetap'],
+        ];
+
+        return view('frontend.content.statistik.warga', compact(
+            'statistik',
+            'total',
+            'chart',
+            'rw',
+            'listRt'
+        ));
     }
 
-    $data = $query->get();
+    public function statistikUsia(Request $request)
+    {
+        $rw = '02';
 
-    // tabel statistik (per RT)
-    $statistik = $data->groupBy('rt')->map(function ($items) {
-        return [
-            'jumlah' => $items->count(),
-            'laki' => $items->where('jenis_kelamin', 'Laki-laki')->count(),
-            'perempuan' => $items->where('jenis_kelamin', 'Perempuan')->count(),
-            'tetap' => $items->where('status_warga', 'Aktif')->count(),
-            'tidak_tetap' => $items->where('status_warga', 'Pindah')->count(),
+        // Ambil RT unik
+        $listRt = Warga::where('rw', $rw)
+            ->select('rt')
+            ->distinct()
+            ->orderBy('rt')
+            ->pluck('rt');
+
+        // Query dasar
+        $query = Warga::where('rw', $rw)->orderBy('rt');
+
+        if ($request->filled('rt')) {
+            $query->where('rt', $request->rt);
+        }
+
+        $data = $query->get();
+
+        // Tambahkan field usia sekali saja (biar tidak hitung Carbon berulang)
+        $data->transform(function ($w) {
+            $w->usia = Carbon::parse($w->tanggal_lahir)->age;
+            return $w;
+        });
+
+        // ===============================
+        // STATISTIK PER RT
+        // ===============================
+        $statistik = $data->groupBy('rt')
+            ->map(function ($items) {
+
+                $group = function ($from, $to = null) use ($items) {
+                    return $items->filter(function ($w) use ($from, $to) {
+                        return $to
+                            ? $w->usia >= $from && $w->usia <= $to
+                            : $w->usia >= $from;
+                    });
+                };
+
+                return [
+                    'jumlah' => $items->count(),
+
+                    'balita_l' => $group(0,5)->where('jenis_kelamin','Laki-laki')->count(),
+                    'balita_p' => $group(0,5)->where('jenis_kelamin','Perempuan')->count(),
+
+                    'anak_l' => $group(6,12)->where('jenis_kelamin','Laki-laki')->count(),
+                    'anak_p' => $group(6,12)->where('jenis_kelamin','Perempuan')->count(),
+
+                    'remaja_l' => $group(13,17)->where('jenis_kelamin','Laki-laki')->count(),
+                    'remaja_p' => $group(13,17)->where('jenis_kelamin','Perempuan')->count(),
+
+                    'dewasa_l' => $group(18,59)->where('jenis_kelamin','Laki-laki')->count(),
+                    'dewasa_p' => $group(18,59)->where('jenis_kelamin','Perempuan')->count(),
+
+                    'lansia_l' => $group(60)->where('jenis_kelamin','Laki-laki')->count(),
+                    'lansia_p' => $group(60)->where('jenis_kelamin','Perempuan')->count(),
+                ];
+            })
+            ->sortKeys(SORT_NATURAL);
+
+        // ===============================
+        // TOTAL SEMUA (UNTUK BARIS JUMLAH + PIE)
+        // ===============================
+
+        $total = [
+            'jumlah' => $data->count(),
+
+            'balita_l' => $data->whereBetween('usia',[0,5])->where('jenis_kelamin','Laki-laki')->count(),
+            'balita_p' => $data->whereBetween('usia',[0,5])->where('jenis_kelamin','Perempuan')->count(),
+
+            'anak_l' => $data->whereBetween('usia',[6,12])->where('jenis_kelamin','Laki-laki')->count(),
+            'anak_p' => $data->whereBetween('usia',[6,12])->where('jenis_kelamin','Perempuan')->count(),
+
+            'remaja_l' => $data->whereBetween('usia',[13,17])->where('jenis_kelamin','Laki-laki')->count(),
+            'remaja_p' => $data->whereBetween('usia',[13,17])->where('jenis_kelamin','Perempuan')->count(),
+
+            'dewasa_l' => $data->whereBetween('usia',[18,59])->where('jenis_kelamin','Laki-laki')->count(),
+            'dewasa_p' => $data->whereBetween('usia',[18,59])->where('jenis_kelamin','Perempuan')->count(),
+
+            'lansia_l' => $data->where('usia','>=',60)->where('jenis_kelamin','Laki-laki')->count(),
+            'lansia_p' => $data->where('usia','>=',60)->where('jenis_kelamin','Perempuan')->count(),
         ];
-    });
 
-    // 🔥 data KHUSUS untuk chart (hasil filter)
-    $chart = [
-        'laki' => $data->where('jenis_kelamin', 'Laki-laki')->count(),
-        'perempuan' => $data->where('jenis_kelamin', 'Perempuan')->count(),
-        'tetap' => $data->where('status_warga', 'Aktif')->count(),
-        'tidak_tetap' => $data->where('status_warga', 'Pindah')->count(),
-    ];
+        // Total khusus untuk PIE
+        $total['balita'] = $total['balita_l'] + $total['balita_p'];
+        $total['anak']   = $total['anak_l'] + $total['anak_p'];
+        $total['remaja'] = $total['remaja_l'] + $total['remaja_p'];
+        $total['dewasa'] = $total['dewasa_l'] + $total['dewasa_p'];
+        $total['lansia'] = $total['lansia_l'] + $total['lansia_p'];
 
-    // total tabel
-    $total = [
-        'jumlah' => $data->count(),
-        'laki' => $chart['laki'],
-        'perempuan' => $chart['perempuan'],
-        'tetap' => $chart['tetap'],
-        'tidak_tetap' => $chart['tidak_tetap'],
-    ];
-
-    return view('frontend.content.statistik.warga', compact(
-        'statistik',
-        'total',
-        'chart',
-        'rw',
-        'listRt'
-    ));
-}
-
-public function statistikUsia(Request $request)
-{
-    $rw = '02';
-
-    // ambil RT unik (01–08 atau dari database)
-    $listRt = Warga::where('rw', $rw)
-        ->select('rt')
-        ->distinct()
-        ->orderBy('rt')
-        ->pluck('rt');
-
-    // query dasar
-    $query = Warga::where('rw', $rw);
-
-    // FILTER RT
-    if ($request->filled('rt')) {
-        $query->where('rt', $request->rt);
+        return view('frontend.content.statistik.usia', compact(
+            'statistik',
+            'total',
+            'rw',
+            'listRt'
+        ));
     }
 
-    $data = $query->get();
 
-    // ===============================
-    // STATISTIK PER RT
-    // ===============================
-    $statistik = $data->groupBy('rt')->map(function ($items) {
+    public function statistikAgama(Request $request)
+    {
+        $rw = '02';
 
-        $group = function ($from, $to = null) use ($items) {
-            return $items->filter(function ($w) use ($from, $to) {
-                $usia = Carbon::parse($w->tanggal_lahir)->age;
-                return $to
-                    ? $usia >= $from && $usia <= $to
-                    : $usia >= $from;
-            });
-        };
+        $query = Warga::where('rw', $rw);
 
-        return [
-            'jumlah' => $items->count(),
+        // FILTER RT
+        if ($request->filled('rt')) {
+            $query->where('rt', $request->rt);
+        }
 
-            'balita_l' => $group(0,5)->where('jenis_kelamin','Laki-laki')->count(),
-            'balita_p' => $group(0,5)->where('jenis_kelamin','Perempuan')->count(),
+        $data = $query->get();
 
-            'anak_l' => $group(6,12)->where('jenis_kelamin','Laki-laki')->count(),
-            'anak_p' => $group(6,12)->where('jenis_kelamin','Perempuan')->count(),
+        // list RT untuk dropdown
+        $listRt = Warga::where('rw', $rw)
+            ->select('rt')
+            ->distinct()
+            ->orderBy('rt')
+            ->pluck('rt');
 
-            'remaja_l' => $group(13,17)->where('jenis_kelamin','Laki-laki')->count(),
-            'remaja_p' => $group(13,17)->where('jenis_kelamin','Perempuan')->count(),
+        // statistik per RT
+        $statistik = $data->groupBy('rt')
+        ->map(function ($items) {
+            return [
+                'jumlah'  => $items->count(),
+                'islam'   => $items->where('agama','Islam')->count(),
+                'kristen' => $items->where('agama','Kristen')->count(),
+                'hindu'   => $items->where('agama','Hindu')->count(),
+                'buddha'  => $items->where('agama','Buddha')->count(),
+                'lainnya' => $items->where('agama','Lainnya')->count(),
+            ];
+        })
+        ->sortKeys(SORT_NATURAL); 
 
-            'dewasa_l' => $group(18,59)->where('jenis_kelamin','Laki-laki')->count(),
-            'dewasa_p' => $group(18,59)->where('jenis_kelamin','Perempuan')->count(),
-
-            'lansia_l' => $group(60)->where('jenis_kelamin','Laki-laki')->count(),
-            'lansia_p' => $group(60)->where('jenis_kelamin','Perempuan')->count(),
+        // total keseluruhan (buat pie chart)
+        $total = [
+            'jumlah'  => $data->count(),
+            'islam'   => $data->where('agama','Islam')->count(),
+            'kristen' => $data->where('agama','Kristen')->count(),
+            'hindu'   => $data->where('agama','Hindu')->count(),
+            'buddha'  => $data->where('agama','Buddha')->count(),
+            'lainnya' => $data->where('agama','Lainnya')->count(),
         ];
-    });
 
-    // ===============================
-    // TOTAL (UNTUK PIE CHART)
-    // ===============================
-    $total = [
-        'balita' => $data->filter(fn($w)=>Carbon::parse($w->tanggal_lahir)->age <=5)->count(),
-        'anak'   => $data->filter(fn($w)=>Carbon::parse($w->tanggal_lahir)->age >=6 && Carbon::parse($w->tanggal_lahir)->age <=12)->count(),
-        'remaja' => $data->filter(fn($w)=>Carbon::parse($w->tanggal_lahir)->age >=13 && Carbon::parse($w->tanggal_lahir)->age <=17)->count(),
-        'dewasa' => $data->filter(fn($w)=>Carbon::parse($w->tanggal_lahir)->age >=18 && Carbon::parse($w->tanggal_lahir)->age <=59)->count(),
-        'lansia' => $data->filter(fn($w)=>Carbon::parse($w->tanggal_lahir)->age >=60)->count(),
-    ];
-
-    return view('frontend.content.statistik.usia', compact(
-        'statistik',
-        'total',
-        'rw',
-        'listRt'
-    ));
-}
-
-
-public function statistikAgama(Request $request)
-{
-    $rw = '02';
-
-    $query = Warga::where('rw', $rw);
-
-    // FILTER RT
-    if ($request->filled('rt')) {
-        $query->where('rt', $request->rt);
+        return view('frontend.content.statistik.agama', compact(
+            'rw','listRt','statistik','total'
+        ));
     }
 
-    $data = $query->get();
+    public function statistikPendidikan(Request $request)
+    {
+        $rw = '02';
 
-    // list RT untuk dropdown
-    $listRt = Warga::where('rw', $rw)
-        ->select('rt')
-        ->distinct()
-        ->orderBy('rt')
-        ->pluck('rt');
+        $query = Warga::where('rw', $rw);
 
-    // statistik per RT
-    $statistik = $data->groupBy('rt')->map(function ($items) {
-        return [
-            'jumlah'  => $items->count(),
-            'islam'   => $items->where('agama','Islam')->count(),
-            'kristen' => $items->where('agama','Kristen')->count(),
-            'hindu'   => $items->where('agama','Hindu')->count(),
-            'buddha'  => $items->where('agama','Buddha')->count(),
-            'lainnya' => $items->where('agama','Lainnya')->count(),
+        // FILTER RT
+        if ($request->filled('rt')) {
+            $query->where('rt', $request->rt);
+        }
+
+        $data = $query->get();
+
+        // list RT untuk dropdown
+        $listRt = Warga::where('rw', $rw)
+            ->select('rt')
+            ->distinct()
+            ->orderBy('rt')
+            ->pluck('rt');
+
+        // statistik per RT
+        $statistik = $data->groupBy('rt')->map(function ($items) {
+            return [
+                'jumlah' => $items->count(),
+                'ts'  => $items->where('pendidikan','Tidak Sekolah')->count(),
+                'sd'  => $items->where('pendidikan','SD')->count(),
+                'smp' => $items->where('pendidikan','SMP')->count(),
+                'sma' => $items->where('pendidikan','SMA/SMK')->count(),
+                'd3'  => $items->where('pendidikan','D3')->count(),
+                's1'  => $items->where('pendidikan','S1')->count(),
+                's2'  => $items->where('pendidikan','S2')->count(),
+            ];
+        })
+        ->sortKeys(SORT_NATURAL);
+
+        // total keseluruhan (pie chart)
+        $total = [
+            'jumlah' => $data->count(),
+            'ts'  => $data->where('pendidikan','Tidak Sekolah')->count(),
+            'sd'  => $data->where('pendidikan','SD')->count(),
+            'smp' => $data->where('pendidikan','SMP')->count(),
+            'sma' => $data->where('pendidikan','SMA/SMK')->count(),
+            'd3'  => $data->where('pendidikan','D3')->count(),
+            's1'  => $data->where('pendidikan','S1')->count(),
+            's2'  => $data->where('pendidikan','S2')->count(),
         ];
-    });
 
-    // total keseluruhan (buat pie chart)
-    $total = [
-        'jumlah'  => $data->count(),
-        'islam'   => $data->where('agama','Islam')->count(),
-        'kristen' => $data->where('agama','Kristen')->count(),
-        'hindu'   => $data->where('agama','Hindu')->count(),
-        'buddha'  => $data->where('agama','Buddha')->count(),
-        'lainnya' => $data->where('agama','Lainnya')->count(),
-    ];
-
-    return view('frontend.content.statistik.agama', compact(
-        'rw','listRt','statistik','total'
-    ));
-}
-
-public function statistikPendidikan(Request $request)
-{
-    $rw = '02';
-
-    $query = Warga::where('rw', $rw);
-
-    // FILTER RT
-    if ($request->filled('rt')) {
-        $query->where('rt', $request->rt);
+        return view('frontend.content.statistik.pendidikan', compact(
+            'rw','listRt','statistik','total'
+        ));
     }
-
-    $data = $query->get();
-
-    // list RT untuk dropdown
-    $listRt = Warga::where('rw', $rw)
-        ->select('rt')
-        ->distinct()
-        ->orderBy('rt')
-        ->pluck('rt');
-
-    // statistik per RT
-    $statistik = $data->groupBy('rt')->map(function ($items) {
-        return [
-            'jumlah' => $items->count(),
-            'ts'  => $items->where('pendidikan','Tidak Sekolah')->count(),
-            'sd'  => $items->where('pendidikan','SD')->count(),
-            'smp' => $items->where('pendidikan','SMP')->count(),
-            'sma' => $items->where('pendidikan','SMA/SMK')->count(),
-            'd3'  => $items->where('pendidikan','D3')->count(),
-            's1'  => $items->where('pendidikan','S1')->count(),
-            's2'  => $items->where('pendidikan','S2')->count(),
-        ];
-    });
-
-    // total keseluruhan (pie chart)
-    $total = [
-        'jumlah' => $data->count(),
-        'ts'  => $data->where('pendidikan','Tidak Sekolah')->count(),
-        'sd'  => $data->where('pendidikan','SD')->count(),
-        'smp' => $data->where('pendidikan','SMP')->count(),
-        'sma' => $data->where('pendidikan','SMA/SMK')->count(),
-        'd3'  => $data->where('pendidikan','D3')->count(),
-        's1'  => $data->where('pendidikan','S1')->count(),
-        's2'  => $data->where('pendidikan','S2')->count(),
-    ];
-
-    return view('frontend.content.statistik.pendidikan', compact(
-        'rw','listRt','statistik','total'
-    ));
-}
 
         public function InformasiInventaris()
         {
@@ -360,4 +387,32 @@ public function statistikPendidikan(Request $request)
             return view('frontend.content.informasi.inventaris', compact('inventaris'));
         }
 
+        public function keuanganHome(Request $request)
+        {
+            $rt = $request->rt;
+            $bulanFilter = $request->bulan;
+
+            $query = Warga::where('status_keluarga', 'Kepala Keluarga')
+                        ->where('status_warga', 'Aktif');
+
+            if ($rt) {
+                $query->where('rt', $rt);
+            }
+
+            $wargas = $query->orderBy('nama_lengkap')->get();
+
+            $iurans = Iuran::when($rt, fn($q) => $q->where('rt', $rt))
+                ->when($bulanFilter, fn($q) => $q->where('bulan', $bulanFilter))
+                ->get()
+                ->groupBy('warga_id'); // 🔥 PENTING biar cepat di view
+
+            // ambil list RT unik untuk filter
+            $listRt = Warga::select('rt')->distinct()->pluck('rt');
+
+            return view('frontend.content.keuanganHome', compact(
+                'wargas',
+                'iurans',
+                'listRt'
+            ));
+        }
 }

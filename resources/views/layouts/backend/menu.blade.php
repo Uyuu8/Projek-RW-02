@@ -170,6 +170,17 @@
                     </span>
                 </a>
             </li>
+
+            {{-- MENU PKK --}}
+            @elseif(Auth::user()->role == 'PKK')
+            <li class="nav-item active">
+                <a class="d-flex align-items-center" href="#">
+                    <i data-feather="home"></i>
+                    <span class="menu-item text-truncate">
+                        Dashboard PKK
+                    </span>
+                </a>
+            </li>
             @endif
         </ul>
     </div>

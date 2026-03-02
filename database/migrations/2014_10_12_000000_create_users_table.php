@@ -18,7 +18,7 @@ class CreateUsersTable extends Migration
             $table->string('name');
             $table->string('username')->unique();
             $table->string('email')->unique();
-            $table->enum('role',['Admin','Ketua RW','Sekretaris','Bendahara','Tarka']);
+            $table->enum('role',['Admin','Ketua RW','Sekretaris','Bendahara','Tarka','PKK']);
             $table->enum('status',['Aktif','Tidak Aktif']);
             $table->string('foto_profile')->nullable();
             $table->timestamp('email_verified_at')->nullable();

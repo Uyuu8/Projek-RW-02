@@ -42,6 +42,8 @@ Route::get('/', [App\Http\Controllers\Frontend\IndexController::class, 'index'])
             [App\Http\Controllers\Frontend\IndexController::class, 'InformasiInventaris'])
         ->name('informasi.inventaris');
 
+        Route::get('/transparansi-keuangan', [App\Http\Controllers\Frontend\IndexController::class, 'keuanganHome'])
+        ->name('frontend.keuanganHome');
 
 
         /// BERITA \\\

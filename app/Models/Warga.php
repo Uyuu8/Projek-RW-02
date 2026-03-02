@@ -34,4 +34,9 @@ class Warga extends Model
         return $this->hasMany(Iuran::class);
     }
 
+    public function getNamaSensorAttribute()
+    {
+    return substr($this->nama_lengkap, 0, 3) . '***';
+    }
+
 }

@@ -112,170 +112,39 @@
     gap: 30px;
     flex-wrap: wrap;
 }
+
+.h3 {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+.hr-elegant {
+    border: none;
+    height: 1px;
+    background: linear-gradient(to right, transparent, #aaa, transparent);
+    margin: 30px 0;
+}
+.img-fullwidth {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
 </style>
 
 <div class="container py-5 org-chart">
-
+<br>
     <h3 class="mb-5 fw-bold">STRUKTUR KEPENGURUSAN RW 02</h3>
-
-    <!-- KETUA RW -->
-    <div class="org-row">
-        <div class="org-card" style="width:260px">
-            <img src="{{ asset('images/ketua.jpg') }}"
-                 class="rounded-circle mb-3"
-                 width="120" height="120"
-                 style="object-fit:cover">
-            <h5 class="fw-bold mb-1">SUHERMAN</h5>
-            <span class="badge bg-primary">KETUA RW</span>
-        </div>
-    </div>
-
-    <div class="org-line-vertical"></div>
-    <div class="org-line-horizontal" style="width:60%"></div>
-
-    <!-- PENGURUS INTI -->
-    <div class="org-row mb-4">
-        <div class="org-card" style="width:220px">
-            <h6 class="fw-bold">DADAN WARMANA</h6>
-            <span class="badge bg-warning text-white">SEKRETARIS</span>
-        </div>
-        <div class="org-card" style="width:220px">
-            <h6 class="fw-bold">ASEP WAHYUDIN</h6>
-            <span class="badge bg-success">HUMAS</span>
-        </div>
-        <div class="org-card" style="width:220px">
-            <h6 class="fw-bold">RUDI FIRMANSYAH</h6>
-            <span class="badge bg-danger">BENDAHARA</span>
-        </div>
-    </div>
-
-    <div class="org-line-vertical"></div>
-    <div class="org-line-horizontal" style="width:0%"></div>
-
-     <!-- GARIS KE SEKSI -->
-<div class="org-line-vertical mb-3 org-line-horizontal" style="width:80%"></div>
-
-<h5 class="fw-bold mb-4 text-center">SEKSI-SEKSI RW</h5>
-<div class="org-line-vertical"></div>
-<div class="seksi-grid mb-4">
-    <div class="seksi-card">
-        <strong>Seksi Keamanan</strong>
-        <small>AGUS DEDI</small>
-    </div>
-
-    <div class="seksi-card">
-        <strong>Seksi Kerohanian</strong>
-        <small>H. MUHTAR</small>
-    </div>
-
-    <div class="seksi-card">
-        <strong>Seksi Pembangunan</strong>
-        <small>PUGUH JAKA NARIMA</small>
-        <small>DEDI DAENG</small>
-    </div>
-
-    <div class="seksi-card">
-        <strong>Seksi Sosial</strong>
-         <small>WAGINO</small>
-        <small>RAHMAT</small>
-    </div>
-
-    <div class="seksi-card">
-        <strong>Seksi Lingkungan Hidup</strong>
-        <small>WILDAN TRIYANA</small>
-        <small>DAUD SANI</small>
-    </div>
-
-    <div class="seksi-card">
-        <strong>Seksi Pendidikan</strong>
-        <small>DENI HERMANTO</small>
-    </div>
-
-    <div class="seksi-card">
-        <strong>Seksi Pemuda & Olahraga</strong>
-        <small>GARJITO</small>
-    </div>
-
-    <div class="seksi-card">
-        <strong>Seksi Kesehatan</strong>
-        <small>IMAS</small>
-        <small>ANTI</small>
-    </div>
-</div>
-
-
-    <!-- KETUA RT -->
-<div class="org-line-vertical mb-3"></div>
-
-<h5 class="fw-bold mb-4 text-center">KETUA RT</h5>
-
-    <div class="rt-grid">
-        <div class="rt-card">
-        <strong>KETUA RT 01</strong>
-        <span>ENJAN SUPYAN ARIF</span>
-        <strong>SEKRETARIS</strong>
-        <span>AZIZ RAMADHAN</span>
-        <strong>BENDAHARA</strong>
-        <span>RINI TARWIATI</span>
-        </div>
-        <div class="rt-card">
-        <strong>KETUA RT 02</strong>
-        <span>MAMAN SUPARMAN</span>
-        <strong>SEKRETARIS</strong>
-        <span>ASEP</span>
-        <strong>BENDAHARA</strong>
-        <span>AGUS UJANG</span>
-        </div>
-        <div class="rt-card">
-        <strong>KETUA RT 03</strong>
-        <span>DEDE UDAN BONDAN</span>
-        <strong>SEKRETARIS</strong>
-        <span>FEBY</span>
-        <strong>BENDAHARA</strong>
-        <span>ANGLE</span>
-        </div>
-        <div class="rt-card">
-        <strong>KETUA RT 04</strong>
-        <span>MULYADI</span>
-        <strong>SEKRETARIS</strong>
-        <span>-</span>
-        <strong>BENDAHARA</strong>
-        <span>IMAS</span>
-        </div>
-        <div class="rt-card">
-        <strong>KETUA RT 05</strong>
-        <span>MIMIN AMIN</span>
-        <strong>SEKRETARIS</strong>
-        <span>AHMAD</span>
-        <strong>BENDAHARA</strong>
-        <span>EEN</span>
-        </div>
-        <div class="rt-card">
-        <strong>KETUA RT 06</strong>
-        <span>IWAN SURYANA</span>
-        <strong>SEKRETARIS</strong>
-        <span>RINI SUHEMI</span>
-        <strong>BENDAHARA</strong>
-        <span>RITA JUWTA</span>
-        </div>
-        <div class="rt-card">
-        <strong>KETUA RT 07</strong>
-        <span>UJANG JUHANA</span>
-        <strong>SEKRETARIS</strong>
-        <span>ASEP.W</span>
-        <strong>BENDAHARA</strong>
-        <span>NIGRUM</span>
-        </div>
-        <div class="rt-card">
-        <strong>KETUA RT 08</strong>
-        <span>BAMBANG PURWANTO</span>
-        <strong>SEKRETARIS</strong>
-        <span>ADITYA ARYADI</span>
-        <strong>BENDAHARA</strong>
-        <span>SRI MUJI LESTARI</span>
-        </div>
-    </div>
-
-
-</div>
+    <!-- STRUKTUR RW -->
+   <img src="{{ asset('images/struktur_rw.png') }}" class="img-fullwidth">
+   <br>
+   <hr class="hr-elegant">
+   <!-- STRUKTUR PKK -->
+    <br>
+    <br>
+    <h3 class="mb-5 fw-bold">STRUKTUR KEPENGURUSAN PKK</h3>
+    <br>
+   <img src="{{ asset('images/strukturpkk.jpg') }}" 
+     class="img-fullwidth"
+     alt="Struktur PKK">
 @endsection

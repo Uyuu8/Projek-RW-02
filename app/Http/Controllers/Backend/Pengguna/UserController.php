@@ -40,7 +40,7 @@ class UserController extends Controller
             if ($request->hasFile('foto_profile')) {
                 $image = $request->file('foto_profile');
                 $nama_img = time()."_".$image->getClientOriginalName();
-                $image->move(public_path('uploads/profile'), $nama_img);
+                $image->move(public_path('images/profile'), $nama_img);
             }
 
             $user = new User();
@@ -88,7 +88,7 @@ class UserController extends Controller
         if ($request->hasFile('foto_profile')) {
             $image = $request->file('foto_profile');
             $nama_img = time()."_".$image->getClientOriginalName();
-            $image->move(public_path('uploads/profile'), $nama_img);
+            $image->move(public_path('images/profile'), $nama_img);
         }
 
         $user->update([

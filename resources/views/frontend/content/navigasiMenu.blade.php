@@ -77,7 +77,8 @@
             <i class="fa-solid fa-heart-pulse"></i>
             KESEHATAN
         </a>
-        <a href="#" class="menu-item">
+        <a href="{{ route('frontend.keuanganHome') }}"
+        class="menu-item {{ request()->routeIs('frontend.keuanganHome') ? 'active' : '' }}">
             <i class="fa-solid fa-wallet"></i>
             KEUANGAN
         </a>
