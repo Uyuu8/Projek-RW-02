@@ -45,6 +45,20 @@ select:hover {
     padding: 20px;
 }
 
+.filter-box {
+    overflow: visible !important;
+}
+
+.card {
+    overflow: visible !important;
+}
+
+.container,
+.container-fluid {
+    overflow: visible !important;
+}
+
+
 /* ====== RESPONSIVE ====== */
 @media (max-width: 768px) {
     .filter-box .row > div {
@@ -59,6 +73,45 @@ select:hover {
     <h4 class="text-center font-weight-bold mb-4">
         TRANSPARANSI KEUANGAN RT
     </h4>
+
+    {{-- ===== RINGKASAN KEUANGAN ===== --}}
+    <div class="row mb-4">
+
+        {{-- TOTAL KESELURUHAN --}}
+        <div class="col-md-6 mb-3">
+            <div class="card text-center">
+                <div class="card-body">
+                    <small class="text-muted">Total Pemasukan</small>
+                    <h4 class="mb-0 text-success">
+                        Rp {{ number_format($totalKeseluruhan ?? 0) }}
+                    </h4>
+                </div>
+            </div>
+        </div>
+
+        {{-- TOTAL PER RT --}}
+        <div class="col-md-6 mb-3">
+            <div class="card text-center">
+                <div class="card-body">
+                    <small class="text-muted">Total per RT</small>
+
+                    <div class="mt-2">
+                        @forelse($totalPerRt as $rtItem => $total)
+                            <div>
+                                RT {{ $rtItem }} :
+                                <strong>Rp {{ number_format($total) }}</strong>
+                            </div>
+                        @empty
+                            <small class="text-muted">Belum ada data</small>
+                        @endforelse
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
 
     {{-- FILTER --}}
     <div class="filter-box mb-4">
@@ -78,6 +131,7 @@ select:hover {
                 </select>
             </div>
 
+            {{-- FILTER BULAN --}}
             {{-- FILTER BULAN --}}
             <div class="col-md-3">
                 <select name="bulan" class="form-control">
@@ -99,6 +153,7 @@ select:hover {
                     @endforeach
                 </select>
             </div>
+            
 
             <div class="col-md-3">
                 <button class="btn btn-primary w-100">

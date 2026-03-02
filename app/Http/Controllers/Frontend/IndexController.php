@@ -387,32 +387,55 @@ class IndexController extends Controller
             return view('frontend.content.informasi.inventaris', compact('inventaris'));
         }
 
-        public function keuanganHome(Request $request)
-        {
-            $rt = $request->rt;
-            $bulanFilter = $request->bulan;
+    public function keuanganHome(Request $request)
+    {
+        $rt = $request->rt;
+        $bulanFilter = $request->bulan;
 
-            $query = Warga::where('status_keluarga', 'Kepala Keluarga')
-                        ->where('status_warga', 'Aktif');
+        // ================= WARGA =================
+        $query = Warga::where('status_keluarga', 'Kepala Keluarga')
+                    ->where('status_warga', 'Aktif');
 
-            if ($rt) {
-                $query->where('rt', $rt);
-            }
-
-            $wargas = $query->orderBy('nama_lengkap')->get();
-
-            $iurans = Iuran::when($rt, fn($q) => $q->where('rt', $rt))
-                ->when($bulanFilter, fn($q) => $q->where('bulan', $bulanFilter))
-                ->get()
-                ->groupBy('warga_id'); // 🔥 PENTING biar cepat di view
-
-            // ambil list RT unik untuk filter
-            $listRt = Warga::select('rt')->distinct()->pluck('rt');
-
-            return view('frontend.content.keuanganHome', compact(
-                'wargas',
-                'iurans',
-                'listRt'
-            ));
+        if ($rt) {
+            $query->where('rt', $rt);
         }
+
+        $wargas = $query->orderBy('nama_lengkap')->get();
+
+        // ================= IURAN RAW (UNTUK TOTAL) =================
+        $iuransRaw = Iuran::when($rt, fn($q) => $q->where('rt', $rt))
+            ->when($bulanFilter, fn($q) => $q->where('bulan', $bulanFilter))
+            ->get();
+
+        // ================= IURAN GROUP (UNTUK VIEW) =================
+        $iurans = $iuransRaw->groupBy('warga_id');
+
+        // ================= LIST RT URUT =================
+        $listRt = Warga::select('rt')
+            ->distinct()
+            ->orderBy('rt')
+            ->pluck('rt');
+
+        // ================= TOTAL KESELURUHAN =================
+        $totalKeseluruhan = $iuransRaw
+            ->where('status', 'Lunas')
+            ->sum('jumlah');
+
+        // ================= TOTAL PER RT =================
+        $totalPerRt = $iuransRaw
+            ->where('status', 'Lunas')
+            ->groupBy('rt')
+            ->map(fn($items) => $items->sum('jumlah'));
+
+        return view('frontend.content.keuanganHome', compact(
+            'wargas',
+            'iurans',
+            'listRt',
+            'totalKeseluruhan',
+            'totalPerRt'
+        ));
+    }
+
+
+
 }
