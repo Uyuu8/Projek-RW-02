@@ -42,6 +42,14 @@ Route::get('/', [App\Http\Controllers\Frontend\IndexController::class, 'index'])
             [App\Http\Controllers\Frontend\IndexController::class, 'InformasiInventaris'])
         ->name('informasi.inventaris');
 
+        Route::get('/bansos', 
+            [App\Http\Controllers\Frontend\IndexController::class, 'bansos'])
+        ->name('bansos.index');
+
+        Route::get('/renbang', 
+            [App\Http\Controllers\Frontend\IndexController::class, 'renbang'])
+        ->name('renbang.index');
+
         Route::get('/transparansi-keuangan', [App\Http\Controllers\Frontend\IndexController::class, 'keuanganHome'])
         ->name('frontend.keuanganHome');
 
@@ -97,6 +105,18 @@ Route::middleware('auth')->group(function () {
             'backend-inventaris' => 'inventari'
         ])
         ->names('backend.website.inventaris');
+
+        Route::resource(
+            'backend-bansos',
+            Backend\Website\BansosController::class
+        )->parameters([
+            'backend-bansos' => 'bansos'
+        ])
+        ->names('backend.website.bansos');;
+
+        Route::resource('backend-renbang',
+            Backend\Website\RenbangController::class
+        )->names('backend.website.renbang');
 
         Route::get('backend-warga/export/pdf', [
             App\Http\Controllers\Backend\Website\WargaController::class,

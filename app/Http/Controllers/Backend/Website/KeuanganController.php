@@ -17,6 +17,7 @@ class KeuanganController extends Controller
     {
         $wargas = Warga::where('rt', $rt)
             ->where('status_keluarga', 'Kepala Keluarga')
+            ->where('status_warga', 'Aktif')
             ->orderBy('nama_lengkap')
             ->get();
 

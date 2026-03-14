@@ -8,13 +8,12 @@
 
     <div class="row">
         @forelse ($inventaris as $item)
-            <div class="col-md-4 mb-4">
-                <div class="card h-100 shadow-sm">
+            <div class="col-md-3 mb-4">
+                <div class="card shadow-sm border-0">
 
                     @if ($item->foto)
                         <img src="{{ asset('images/inventaris/' . $item->foto) }}"
-                             class="card-img-top"
-                             style="height:200px; object-fit:cover;">
+                        class="card-img-top img-inventaris">
                     @else
                         <div class="d-flex align-items-center justify-content-center bg-light"
                              style="height:200px;">
@@ -51,3 +50,24 @@
     </div>
 </div>
 @endsection
+<style>
+<style>
+
+.card-inventaris{
+    border-radius:12px;
+    overflow:hidden;
+    max-width:260px;
+    margin:auto;
+}
+
+.img-inventaris{
+    width:100%;
+    height:200px;
+    object-fit:cover;
+}
+
+.card-body{
+    font-size:14px;
+}
+
+</style>

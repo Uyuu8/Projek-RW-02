@@ -119,7 +119,7 @@ new Chart(document.getElementById('pendidikanChart'), {
 </script>
 
 <style>
-.chart-wrapper {
+/* .chart-wrapper {
     display: flex;
     justify-content: center;
 }
@@ -150,4 +150,4 @@ new Chart(document.getElementById('pendidikanChart'), {
     }
 }
 </style>
-@endpush
+@endpush */

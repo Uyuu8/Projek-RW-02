@@ -178,6 +178,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 <style>
+
+thead th,
+tbody td {
+    text-align: center !important;
+    vertical-align: middle !important;
+}
 .chart-wrapper {
     display: flex;
     justify-content: center;

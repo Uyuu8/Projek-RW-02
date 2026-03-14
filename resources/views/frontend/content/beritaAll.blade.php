@@ -44,33 +44,36 @@
         <div class="row g-4">
 
             @forelse ($berita as $beritas)
-                <div class="col-lg-3 col-md-4 col-sm-6 col-12">
-                    <div class="card shadow-sm border-0 h-100" style="border-radius: 0;">
 
-                        <div class="card-img-top">
+            <div class="col-lg-3 col-md-4 col-sm-6 col-12">
+
+                <div class="news-card">
+
+                    <a href="{{ route('detail.berita', $beritas->slug) }}">
+
+                        <div class="news-thumb">
                             <img src="{{ asset('images/berita/' . $beritas->thumbnail) }}"
-                                 class="img-fluid w-100"
-                                 alt="{{ $beritas->title }}"
-                                 style="height: 180px; object-fit: cover;">
+                                alt="{{ $beritas->title }}">
                         </div>
 
-                        <div class="card-body">
-                            <p class="text-muted mb-2 small">
+                        <div class="news-body">
+
+                            <p class="news-date">
                                 {{ \Carbon\Carbon::parse($beritas->created_at)->translatedFormat('d F Y') }}
                             </p>
 
-                            <h6 class="card-title"
-                                style="min-height: 50px; word-break: break-word;">
-
-                                <a href="{{ route('detail.berita', $beritas->slug) }}"
-                                   class="text-dark text-decoration-none">
-                                    {{ $beritas->title }}
-                                </a>
-
+                            <h6 class="news-title">
+                                {{ $beritas->title }}
                             </h6>
+
                         </div>
-                    </div>
+
+                    </a>
+
                 </div>
+
+            </div>
+
             @empty
                 {{-- EMPTY STATE --}}
                 <div class="col-12 text-center">

@@ -113,7 +113,7 @@ new Chart(document.getElementById('statusChart'), {
 });
 </script>
 
-<style>
+{{-- <style>
 /* ===== PIE CHART RESPONSIVE FIX ===== */
 .chart-wrapper {
     display: flex;
@@ -150,4 +150,4 @@ new Chart(document.getElementById('statusChart'), {
     }
 }
 </style>
-@endpush
+@endpush --}}

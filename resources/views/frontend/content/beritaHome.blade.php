@@ -21,26 +21,38 @@
         </div>
 
          <!-- Daftar Berita -->
-         <div class="row g-4">
+        <div class="row g-4">
             @foreach ($berita as $beritas)
-                <div class="col-lg-3 col-md-4 col-sm-6 col-12">
-                    <div class="card shadow-sm border-0 h-100" style="border-radius: 0;">
-                        <div class="card-img-top">
+
+            <div class="col-lg-3 col-md-4 col-sm-6 col-12">
+
+                <div class="news-card">
+
+                    <a href="{{ route('detail.berita', $beritas->slug) }}">
+
+                        <div class="news-thumb">
                             <img src="{{ asset('images/berita/' . $beritas->thumbnail) }}" 
-                                 class="img-fluid" 
-                                 alt="{{ $beritas->title }}" 
-                                 style="height: 180px; object-fit: cover; border-radius: 0;">
+                                alt="{{ $beritas->title }}">
                         </div>
-                        <div class="card-body">
-                            <p class="text-muted mb-2 small">{{ Carbon\Carbon::parse($beritas->created_at)->format('d F Y') }}</p>
-                            <h6 class="card-title" style="min-height: 50px; overflow-wrap: break-word; word-wrap: break-word; word-break: break-word;">
-                                <a href="{{ route('detail.berita', $beritas->slug) }}" class="text-dark text-decoration-none">
-                                    {{ $beritas->title }}
-                                </a>
+
+                        <div class="news-body">
+
+                            <p class="news-date">
+                                {{ Carbon\Carbon::parse($beritas->created_at)->format('d F Y') }}
+                            </p>
+
+                            <h6 class="news-title">
+                                {{ $beritas->title }}
                             </h6>
+
                         </div>
-                    </div>
+
+                    </a>
+
                 </div>
+
+            </div>
+
             @endforeach
 
             <!-- Jika tidak ada berita -->

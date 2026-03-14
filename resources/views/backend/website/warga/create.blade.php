@@ -9,7 +9,7 @@
             @csrf
 
             <div class="form-group">
-                <label>NIK</label>
+                <label>NIK</label> <span class="text-danger">*</span>
                 <input type="text"
                 name="nik"
                 class="form-control"
@@ -21,38 +21,39 @@
             </div>
 
             <div class="form-group">
-                <label>No KK</label>
+                <label>No KK</label> <span class="text-danger">*</span>
                 <input type="text"
                 name="no_kk"
                 class="form-control"
                 maxlength="16"
                 pattern="\d{16}"
                 inputmode="numeric"
-                oninput="this.value=this.value.replace(/[^0-9]/g,'')">
+                oninput="this.value=this.value.replace(/[^0-9]/g,'')"
+                required>
             </div>
 
             <div class="form-group">
-                <label>Nama Lengkap</label>
+                <label>Nama Lengkap</label> <span class="text-danger">*</span>
                 <input type="text" name="nama_lengkap" class="form-control" required>
             </div>
 
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label>Tempat Lahir</label>
+                        <label>Tempat Lahir</label> <span class="text-danger">*</span>
                         <input type="text" name="tempat_lahir" class="form-control" required>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label>Tanggal Lahir</label>
+                        <label>Tanggal Lahir</label> <span class="text-danger">*</span>
                         <input type="date" name="tanggal_lahir" class="form-control" required>
                     </div>
                 </div>
             </div>
 
             <div class="form-group">
-                <label>Jenis Kelamin</label>
+                <label>Jenis Kelamin</label> <span class="text-danger">*</span>
                 <select name="jenis_kelamin" class="form-control" required>
                     <option value="">-- Pilih --</option>
                     <option value="Laki-laki">Laki-laki</option>
@@ -61,14 +62,14 @@
             </div>
 
             <div class="form-group">
-                <label>Alamat</label>
+                <label>Alamat</label> <span class="text-danger">*</span>
                 <textarea name="alamat" class="form-control"></textarea>
             </div>
 
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label>RT</label>
+                        <label>RT</label> <span class="text-danger">*</span>
                         <select name="rt" class="form-control" required>
                             <option value="">-- Pilih RT --</option>
                             @for ($i = 1; $i <= 8; $i++)
@@ -90,7 +91,7 @@
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label>Pendidikan</label>
+                        <label>Pendidikan</label> <span class="text-danger">*</span>
                         <select name="pendidikan" class="form-control" required>
                             <option value="">-- Pilih Pendidikan --</option>
                             <option value="Tidak Sekolah">Tidak Sekolah</option>
@@ -106,7 +107,7 @@
 
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label>Agama</label>
+                        <label>Agama</label> <span class="text-danger">*</span>
                         <select name="agama" class="form-control" required>
                             <option value="">-- Pilih Agama --</option>
                             <option value="Islam">Islam</option>
@@ -120,7 +121,7 @@
             </div>
 
             <div class="form-group">
-                <label>Status Keluarga</label>
+                <label>Status Keluarga</label> <span class="text-danger">*</span>
                 <select name="status_keluarga" class="form-control">
                     <option value="Kepala Keluarga">Kepala Keluarga</option>
                     <option value="Istri">Istri</option>
@@ -129,7 +130,7 @@
             </div>
 
             <div class="form-group">
-                <label>Status Perkawinan</label>
+                <label>Status Perkawinan</label> <span class="text-danger">*</span>
                 <select name="status_perkawinan" class="form-control">
                     <option value="Belum Kawin">Belum Kawin</option>
                     <option value="Kawin">Kawin</option>
@@ -138,7 +139,7 @@
             </div>
 
             <div class="form-group">
-                <label>Pekerjaan</label>
+                <label>Pekerjaan</label> <span class="text-danger">*</span>
                 <input type="text" name="pekerjaan" class="form-control">
             </div>
 
@@ -148,7 +149,7 @@
             </div>
 
             <div class="form-group">
-                <label>Status Rumah</label>
+                <label>Status Rumah</label> <span class="text-danger">*</span>
                 <select name="status_rumah" class="form-control" required>
                     <option value="Menetap">Menetap</option>
                     <option value="Kontrak">Kontrak</option>
@@ -156,7 +157,7 @@
             </div>
 
             <div class="form-group">
-                <label>Status Warga</label>
+                <label>Status Warga</label> <span class="text-danger">*</span>
                 <select name="status_warga" class="form-control" required>
                     <option value="Aktif">Aktif</option>
                     <option value="Pindah">Pindah</option>
