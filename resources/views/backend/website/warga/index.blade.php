@@ -44,6 +44,15 @@
                 </div>
 
                 <div class="col-md-3">
+                    <select name="status" class="form-control">
+                        <option value="">-- Semua Status --</option>
+                        <option value="Aktif" {{ request('status') == 'Aktif' ? 'selected' : '' }}>Aktif</option>
+                        <option value="Pindah" {{ request('status') == 'Pindah' ? 'selected' : '' }}>Pindah</option>
+                        <option value="Meninggal" {{ request('status') == 'Meninggal' ? 'selected' : '' }}>Meninggal</option>
+                    </select>
+                </div>
+
+                <div class="col-md-3">
                     <button class="btn btn-primary btn-sm">🔍 Cari</button>
                     <a href="{{ route('backend-warga.index') }}" class="btn btn-secondary btn-sm">
                         Reset
@@ -144,9 +153,14 @@
                 </table>
             </div>
 
+            <div class="mb-2 text-muted">
+                Menampilkan {{ $wargas->firstItem() }} - {{ $wargas->lastItem() }} 
+                dari {{ $wargas->total() }} data warga
+            </div>
+
             {{-- PAGINATION --}}
-            <div class="mt-3">
-                {{ $wargas->links() }}
+            <div class="d-flex justify-content-center mt-3">
+                {{ $wargas->onEachSide(1)->links() }}
             </div>
 
         </div>

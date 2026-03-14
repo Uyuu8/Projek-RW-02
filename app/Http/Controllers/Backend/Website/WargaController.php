@@ -37,10 +37,16 @@ class WargaController extends Controller
             $query->where('rt', $request->rt);
         }
 
+        // FILTER STATUS
+        if ($request->filled('status')) {
+            $query->where('status_warga', $request->status);
+        }
+
         $wargas = $query->orderBy('rt')
                         ->orderBy('nama_lengkap')
                         ->paginate(10)
                         ->withQueryString();
+
 
         return view('backend.website.warga.index', compact('wargas', 'listRt'));
     }
@@ -54,7 +60,7 @@ class WargaController extends Controller
     {
         $request->validate([
             'nik'             => 'required|digits:16|unique:wargas,nik',
-            'no_kk'           => 'nullable|digits:16',
+            'no_kk'           => 'required|nullable|digits:16',
             'nama_lengkap'    => 'required',
             'tempat_lahir'    => 'required',
             'tanggal_lahir'   => 'required|date',
@@ -66,6 +72,7 @@ class WargaController extends Controller
 
         Warga::create([
             'nik'               => $request->nik,
+            'no_kk'             => $request->no_kk,
             'nama_lengkap'      => $request->nama_lengkap,
             'tempat_lahir'      => $request->tempat_lahir,
             'tanggal_lahir'     => $request->tanggal_lahir,
@@ -73,7 +80,6 @@ class WargaController extends Controller
             'alamat'            => $request->alamat,
             'rt'                => $request->rt,
             'rw'                => '02', // 🔒 AUTO
-            'no_kk'             => $request->no_kk,
             'pendidikan'        => $request->pendidikan,
             'agama'             => $request->agama,
             'status_keluarga'   => $request->status_keluarga,

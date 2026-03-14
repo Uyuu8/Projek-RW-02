@@ -196,46 +196,56 @@ select:hover {
 
                     <tbody>
 
-                        @forelse($wargas as $warga)
+                    @php
+                    $no = 1;
+                    $adaBelum = false;
+                    @endphp
 
-                        @php
-                            $bayar = $iurans[$warga->id][0] ?? null;
+                    @foreach($wargas as $warga)
 
-                            $sekarang = date('Y-m-d');
-                            $bulanCek = request('bulan') ?? date('m');
-                            $jatuhTempo = date('Y') . '-' . sprintf('%02d', $bulanCek) . '-20';
-                        @endphp
+                    @php
+                    $iuran = $iurans[$warga->id][0] ?? null;
 
-                        <tr>
-                            <td class="text-center">{{ $loop->iteration }}</td>
+                    $sekarang = date('Y-m-d');
+                    $bulanCek = request('bulan') ?? date('m');
+                    $jatuhTempo = date('Y') . '-' . sprintf('%02d', $bulanCek) . '-20';
+                    @endphp
 
-                            {{-- NAMA SENSOR --}}
-                            <td>{{ $warga->nama_sensor }}</td>
+                    {{-- jika sudah lunas jangan ditampilkan --}}
+                    @if(!$iuran || $iuran->status == 'Belum')
 
-                            <td class="text-center">RT {{ $warga->rt }}</td>
+                    @php $adaBelum = true; @endphp
 
-                            <td class="text-center">
+                    <tr>
+                    <td class="text-center">{{ $no++ }}</td>
 
-                                @if($bayar && $bayar->status == 'Lunas')
-                                    <span class="badge bg-success">Lunas</span>
-                                @else
-                                    @if($sekarang > $jatuhTempo)
-                                        <span class="badge bg-danger">Tunggakan</span>
-                                    @else
-                                        <span class="badge bg-warning text-dark">Belum</span>
-                                    @endif
-                                @endif
+                    <td>{{ $warga->nama_sensor }}</td>
 
-                            </td>
-                        </tr>
+                    <td class="text-center">RT {{ $warga->rt }}</td>
 
-                        @empty
-                        <tr>
-                            <td colspan="4" class="text-center py-4">
-                                Tidak ada data
-                            </td>
-                        </tr>
-                        @endforelse
+                    <td class="text-center">
+
+                    @if($sekarang > $jatuhTempo)
+                    <span class="badge bg-danger">Tunggakan</span>
+                    @else
+                    <span class="badge bg-warning text-dark">Belum</span>
+                    @endif
+
+                    </td>
+                    </tr>
+
+                    @endif
+
+                    @endforeach
+
+
+                    @if(!$adaBelum)
+                    <tr>
+                    <td colspan="4" class="text-center py-4">
+                    Semua warga sudah membayar 🎉
+                    </td>
+                    </tr>
+                    @endif
 
                     </tbody>
 

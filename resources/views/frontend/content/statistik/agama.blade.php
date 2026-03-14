@@ -108,7 +108,7 @@ new Chart(document.getElementById('agamaChart'), {
 });
 </script>
 
-<style>
+{{-- <style>
 .chart-wrapper {
     display: flex;
     justify-content: center;
@@ -140,4 +140,4 @@ new Chart(document.getElementById('agamaChart'), {
     }
 }
 </style>
-@endpush
+@endpush --}}

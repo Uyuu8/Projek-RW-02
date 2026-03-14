@@ -13,6 +13,7 @@ use App\Models\Warga;
 use Carbon\Carbon;
 use App\Models\Inventaris;
 use App\Models\Iuran;
+use App\Models\Renbang;
 
 class IndexController extends Controller
 {
@@ -126,7 +127,8 @@ class IndexController extends Controller
     {
         $rw = '02';
 
-        $query = Warga::where('rw', $rw);
+        $query = Warga::where('rw', $rw)
+                        ->where('status_warga', 'Aktif');;
 
         // list RT untuk dropdown
         $listRt = Warga::where('rw', $rw)
@@ -192,7 +194,8 @@ class IndexController extends Controller
             ->pluck('rt');
 
         // Query dasar
-        $query = Warga::where('rw', $rw)->orderBy('rt');
+        $query = Warga::where('rw', $rw)->orderBy('rt')
+                        ->where('status_warga', 'Aktif');;
 
         if ($request->filled('rt')) {
             $query->where('rt', $request->rt);
@@ -284,7 +287,8 @@ class IndexController extends Controller
     {
         $rw = '02';
 
-        $query = Warga::where('rw', $rw);
+        $query = Warga::where('rw', $rw)
+                        ->where('status_warga', 'Aktif');;
 
         // FILTER RT
         if ($request->filled('rt')) {
@@ -333,7 +337,8 @@ class IndexController extends Controller
     {
         $rw = '02';
 
-        $query = Warga::where('rw', $rw);
+        $query = Warga::where('rw', $rw)
+                    ->where('status_warga', 'Aktif');;
 
         // FILTER RT
         if ($request->filled('rt')) {
@@ -387,14 +392,26 @@ class IndexController extends Controller
             return view('frontend.content.informasi.inventaris', compact('inventaris'));
         }
 
+        public function bansos()
+        {
+            $bansos = \App\Models\Bansos::orderBy('tahun', 'desc')->get();
+            return view('frontend.content.bansos.index', compact('bansos'));
+        }
+
+        public function renbang()
+        {
+            $renbang = Renbang::orderBy('tahun', 'desc')->get();
+            return view('frontend.content.renbang.index', compact('renbang'));
+        }
+
     public function keuanganHome(Request $request)
     {
         $rt = $request->rt;
         $bulanFilter = $request->bulan;
 
-        // ================= WARGA =================
+        // ================= DATA WARGA =================
         $query = Warga::where('status_keluarga', 'Kepala Keluarga')
-                    ->where('status_warga', 'Aktif');
+            ->where('status_warga', 'Aktif');
 
         if ($rt) {
             $query->where('rt', $rt);
@@ -402,37 +419,58 @@ class IndexController extends Controller
 
         $wargas = $query->orderBy('nama_lengkap')->get();
 
-        // ================= IURAN RAW (UNTUK TOTAL) =================
-        $iuransRaw = Iuran::when($rt, fn($q) => $q->where('rt', $rt))
-            ->when($bulanFilter, fn($q) => $q->where('bulan', $bulanFilter))
+
+        // ================= IURAN BULAN TERPILIH =================
+        $iuransRaw = Iuran::when($rt, function ($q) use ($rt) {
+                $q->where('rt', $rt);
+            })
+            ->when($bulanFilter, function ($q) use ($bulanFilter) {
+                $q->where('bulan', $bulanFilter);
+            })
             ->get();
 
-        // ================= IURAN GROUP (UNTUK VIEW) =================
+
+        // ================= GROUP IURAN BERDASARKAN WARGA =================
         $iurans = $iuransRaw->groupBy('warga_id');
 
-        // ================= LIST RT URUT =================
+
+        // ================= LIST RT =================
         $listRt = Warga::select('rt')
             ->distinct()
             ->orderBy('rt')
             ->pluck('rt');
 
+
+        // ================= IURAN LUNAS (UNTUK TOTAL UANG MASUK) =================
+        $iuranLunas = Iuran::where('status', 'Lunas')
+            ->when($rt, function ($q) use ($rt) {
+                $q->where('rt', $rt);
+            })
+            ->when($bulanFilter, function ($q) use ($bulanFilter) {
+                $q->where('bulan', $bulanFilter);
+            })
+            ->get();
+
+
         // ================= TOTAL KESELURUHAN =================
-        $totalKeseluruhan = $iuransRaw
-            ->where('status', 'Lunas')
-            ->sum('jumlah');
+        $totalKeseluruhan = $iuranLunas->sum('jumlah');
+
 
         // ================= TOTAL PER RT =================
-        $totalPerRt = $iuransRaw
-            ->where('status', 'Lunas')
+        $totalPerRt = $iuranLunas
             ->groupBy('rt')
-            ->map(fn($items) => $items->sum('jumlah'));
+            ->map(function ($items) {
+                return $items->sum('jumlah');
+            });
+
 
         return view('frontend.content.keuanganHome', compact(
             'wargas',
             'iurans',
             'listRt',
             'totalKeseluruhan',
-            'totalPerRt'
+            'totalPerRt',
+            'bulanFilter'
         ));
     }
 

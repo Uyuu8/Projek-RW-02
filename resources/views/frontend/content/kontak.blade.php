@@ -23,7 +23,7 @@
             <hr class="my-3">
 
             <div class="d-flex justify-content-center gap-3 mb-3">
-                <img src="{{ asset('images/1.jpg') }}"
+                <img src="{{ asset('images/foto-pa-rw.jpg') }}"
                      class="rounded"
                      width="80"
                      height="80">

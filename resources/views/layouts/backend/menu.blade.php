@@ -67,6 +67,22 @@
                     <span class="menu-item text-truncate">Inventaris RW</span>
                 </a>
             </li>
+
+            <li class="nav-item {{ request()->is('backend-bansos*') ? 'active' : '' }}">
+                <a class="d-flex align-items-center"
+                href="{{ route('backend.website.bansos.index') }}">
+                    <i data-feather="archive"></i>
+                    <span class="menu-item text-truncate">Bansos</span>
+                </a>
+            </li>
+            
+            <li class="nav-item {{ request()->is('backend-renbang*') ? 'active' : '' }}">
+                <a class="d-flex align-items-center"
+                href="{{ route('backend.website.renbang.index') }}">
+                    <i data-feather="archive"></i>
+                    <span class="menu-item text-truncate">Renbang</span>
+                </a>
+            </li>
             
             <li class=" nav-item">
                 <a class="d-flex align-items-center" href="#"><i data-feather="file-text"></i>
