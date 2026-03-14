@@ -42,6 +42,10 @@ Route::get('/', [App\Http\Controllers\Frontend\IndexController::class, 'index'])
             [App\Http\Controllers\Frontend\IndexController::class, 'InformasiInventaris'])
         ->name('informasi.inventaris');
 
+        Route::get('/bansos', 
+            [App\Http\Controllers\Frontend\IndexController::class, 'bansos'])
+        ->name('bansos.index');
+
 
 
         /// BERITA \\\
@@ -98,6 +102,14 @@ Route::middleware('auth')->group(function () {
         ])
         ->names('backend.website.inventaris');
 
+        Route::resource(
+            'backend-bansos',
+            Backend\Website\BansosController::class
+        )->parameters([
+            'backend-bansos' => 'bansos'
+        ])
+        ->names('backend.website.bansos');;
+
         Route::get('backend-warga/export/pdf', [
             App\Http\Controllers\Backend\Website\WargaController::class,
             'exportPdf'
@@ -124,9 +136,9 @@ Route::middleware('auth')->group(function () {
             [App\Http\Controllers\Backend\Website\KeuanganController::class, 'exportExcel']
         )->name('backend-keuangan.exportExcel');
 
+
+
         
-
-
 
 
         ///// PENGGUNA \\\\\

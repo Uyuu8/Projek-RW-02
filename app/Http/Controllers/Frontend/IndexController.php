@@ -359,4 +359,13 @@ public function statistikPendidikan(Request $request)
             return view('frontend.content.informasi.inventaris', compact('inventaris'));
         }
 
+        public function bansos()
+        {
+            $bansos = \App\Models\Bansos::orderBy('tahun', 'desc')->get();
+            return view('frontend.content.bansos.index', compact('bansos'));
+        }
+
+
 }
+
+

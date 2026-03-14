@@ -30,7 +30,7 @@
 
         <!-- BANSOS -->
         <div class="main-nav--menu-list">
-            <a href="#" class="menu-list--btn" style="background-color: #0085d2; color:white">BANSOS</a>
+            <a href="{{ route('bansos.index') }}" class="menu-list--btn" style="background-color: #0085d2; color:white">BANSOS</a>
         </div>
 
         <!-- Dropdown Menu Lainnya -->
