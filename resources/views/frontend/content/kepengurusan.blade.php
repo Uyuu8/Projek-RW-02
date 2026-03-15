@@ -144,7 +144,7 @@
     <br>
     <h3 class="mb-5 fw-bold">STRUKTUR KEPENGURUSAN PKK</h3>
     <br>
-   <img src="{{ asset('images/strukturpkk.jpg') }}" 
+   <img src="{{ asset('images/struktur_pkk.jpg') }}" 
      class="img-fullwidth"
      alt="Struktur PKK">
 @endsection

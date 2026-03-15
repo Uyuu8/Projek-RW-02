@@ -16,6 +16,9 @@ Route::get('/', [App\Http\Controllers\Frontend\IndexController::class, 'index'])
         Route::get('kepengurusan', [App\Http\Controllers\Frontend\IndexController::class, 'kepengurusan'])
         ->name('kepengurusan');
 
+        Route::get('katapengantar', [App\Http\Controllers\Frontend\IndexController::class, 'katapengantar'])
+        ->name('katapengantar');
+
         //// FAQ
         Route::get('faq', [App\Http\Controllers\Frontend\IndexController::class, 'faq'])->name('faq');
 

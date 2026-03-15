@@ -63,6 +63,12 @@ class IndexController extends Controller
         return view('frontend.content.kepengurusan');
     }
 
+    public function katapengantar()
+    {
+
+        return view('frontend.content.katapengantar');
+    }
+
     // Berita
     public function berita(Request $request)
     {
