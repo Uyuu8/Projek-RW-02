@@ -10,10 +10,10 @@
         @include('frontend.content.slider')
     @endsection
 
-     {{-- Berita & Event --}}
+     {{-- Berita & Event
     @section('eventHome')
         @include('frontend.content.eventHome')
-    @endsection
+    @endsection --}}
 
     {{-- Berita & Event --}}
     @section('beritaHome')
@@ -24,6 +24,11 @@
     {{-- kontak --}}
     @section('kontak')
         @include('frontend.content.kontak')
+    @endsection
+
+    {{-- kata pengantar --}}
+    @section('katapengantar')
+        @include('frontend.content.katapengantar')
     @endsection
 
     

@@ -33,7 +33,7 @@
         <nav>
             @include('frontend.content.navigasiMenu')
         </nav>
-        @yield('eventHome')
+        @yield('katapengantar')
         <!-- Slider 1 Area End Here -->
         @yield('beritaHome')
         <!-- Video Area Start Here -->
