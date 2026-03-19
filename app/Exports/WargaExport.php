@@ -26,7 +26,6 @@ class WargaExport implements FromCollection, WithHeadings
             'jenis_kelamin',
             'tempat_lahir',
             'tanggal_lahir',
-            'alamat',
             'rt',
             'rw',
             'pendidikan',
@@ -34,7 +33,6 @@ class WargaExport implements FromCollection, WithHeadings
             'status_keluarga',
             'status_perkawinan',
             'pekerjaan',
-            'no_hp',
             'status_warga'
         ]);
     }
@@ -48,7 +46,6 @@ class WargaExport implements FromCollection, WithHeadings
             'Jenis Kelamin',
             'Tempat Lahir',
             'Tanggal Lahir',
-            'Alamat',
             'RT',
             'RW',
             'Pendidikan',
@@ -56,7 +53,6 @@ class WargaExport implements FromCollection, WithHeadings
             'Status Keluarga',
             'Status Kawin',
             'Pekerjaan',
-            'No HP',
             'Status Warga',
         ];
     }

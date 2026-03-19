@@ -90,10 +90,10 @@
                             </select>
                         </div>
 
-                        <div class="form-group">
+                        {{-- <div class="form-group">
                             <label>Alamat</label>
                             <textarea name="alamat" class="form-control" rows="3">{{ old('alamat',$warga->alamat) }}</textarea>
-                        </div>
+                        </div> --}}
 
                     </div>
 
@@ -116,7 +116,7 @@
                             <label>Pendidikan</label>
                             <select name="pendidikan" class="form-control">
                                 <option value="">-- Pilih --</option>
-                                @foreach (['Tidak Sekolah','SD','SMP','SMA/SMK','D3','S1','S2'] as $item)
+                                @foreach (['Tidak Sekolah','SD atau Sederajat','SMP atau Sederajat','SMA/SMK atau Sederajat','D3','S1','S2','S3'] as $item)
                                     <option value="{{ $item }}"
                                         {{ old('pendidikan',$warga->pendidikan)==$item?'selected':'' }}>
                                         {{ $item }}
@@ -166,12 +166,6 @@
                             <label>Pekerjaan</label>
                             <input type="text" name="pekerjaan" class="form-control"
                                    value="{{ old('pekerjaan', $warga->pekerjaan) }}">
-                        </div>
-
-                        <div class="form-group">
-                            <label>No HP</label>
-                            <input type="text" name="no_hp" class="form-control"
-                                   value="{{ old('no_hp', $warga->no_hp) }}">
                         </div>
 
                         <div class="form-group">

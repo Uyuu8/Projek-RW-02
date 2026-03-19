@@ -28,7 +28,6 @@ class BansosController extends Controller
             'diselenggarakan_oleh' => 'required',
             'disalurkan_melalui' => 'required',
             'kategori_penerima' => 'required',
-            'penerima' => 'required',
         ]);
 
         Bansos::create($request->all());
@@ -55,7 +54,6 @@ class BansosController extends Controller
             'diselenggarakan_oleh' => 'required',
             'disalurkan_melalui' => 'required',
             'kategori_penerima' => 'required',
-            'penerima' => 'required',
         ]);
 
         $bansos->update($request->all());

@@ -110,12 +110,27 @@ Route::middleware('auth')->group(function () {
         ->names('backend.website.inventaris');
 
         Route::resource(
+            'backend-mbg',
+            Backend\Website\PenerimaMbgController::class
+        )->parameters([
+            'backend-mbg' => 'mbg'
+        ])->names('backend.website.mbg');
+
+        Route::resource(
+            'backend-bansos.penerima',
+            Backend\Website\PenerimaBansosController::class
+        )->parameters([
+            'backend-bansos' => 'bansos',
+            'penerima' => 'penerima'
+        ])->names('backend.website.bansos.penerima');
+
+        Route::resource(
             'backend-bansos',
             Backend\Website\BansosController::class
         )->parameters([
             'backend-bansos' => 'bansos'
         ])
-        ->names('backend.website.bansos');;
+        ->names('backend.website.bansos');
 
         Route::resource('backend-renbang',
             Backend\Website\RenbangController::class
@@ -155,6 +170,19 @@ Route::middleware('auth')->group(function () {
         Route::get('backend-audit',
             [App\Http\Controllers\Backend\AuditLogController::class, 'index']
         )->name('backend-audit.index');
+
+        // ===== KARTU KELUARGA =====
+        Route::resource(
+            'backend-kartu-keluarga',
+            Backend\Website\KartuKeluargaController::class
+        )->parameters([
+            'backend-kartu-keluarga' => 'kartu_keluarga'
+        ])->names('backend.website.kartu_keluarga');
+
+        Route::post(
+            'backend-kartu-keluarga/upload-kk',
+            [App\Http\Controllers\Backend\Website\KartuKeluargaController::class, 'upload']
+        )->name('backend.website.kartu_keluarga.upload');
 
 
         ///// PENGGUNA \\\\\

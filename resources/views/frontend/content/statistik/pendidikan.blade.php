@@ -38,6 +38,7 @@
                     <th>D3</th>
                     <th>S1</th>
                     <th>S2</th>
+                    <th>S3</th>
                 </tr>
             </thead>
             <tbody>
@@ -53,6 +54,7 @@
                     <td>{{ $row['d3'] }}</td>
                     <td>{{ $row['s1'] }}</td>
                     <td>{{ $row['s2'] }}</td>
+                    <td>{{ $row['s3'] }}</td>
                 </tr>
                 @endforeach
 
@@ -66,6 +68,7 @@
                     <td>{{ $total['d3'] }}</td>
                     <td>{{ $total['s1'] }}</td>
                     <td>{{ $total['s2'] }}</td>
+                    <td>{{ $total['s3'] }}</td>
                 </tr>
             </tbody>
         </table>
@@ -89,7 +92,7 @@
 new Chart(document.getElementById('pendidikanChart'), {
     type: 'pie',
     data: {
-        labels: ['Tidak Sekolah','SD','SMP','SMA/SMK','D3','S1','S2'],
+        labels: ['Tidak Sekolah','SD atau Sederajat','SMP atau Sederajat','SMA/SMK atau Sederajat','D3','S1','S2','S3'],
         datasets: [{
             data: [
                 {{ $total['ts'] }},
@@ -98,7 +101,8 @@ new Chart(document.getElementById('pendidikanChart'), {
                 {{ $total['sma'] }},
                 {{ $total['d3'] }},
                 {{ $total['s1'] }},
-                {{ $total['s2'] }}
+                {{ $total['s2'] }},
+                {{ $total['s3'] }}
             ],
             backgroundColor: [
                 '#ea5455',

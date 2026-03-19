@@ -15,7 +15,6 @@ class Warga extends Model
         'jenis_kelamin',
         'tempat_lahir',
         'tanggal_lahir',
-        'alamat',
         'rt',
         'rw',
         'no_kk',
@@ -24,7 +23,6 @@ class Warga extends Model
         'status_keluarga',
         'status_perkawinan',
         'pekerjaan',
-        'no_hp',
         'status_warga',
         'status_rumah'
     ];
@@ -37,6 +35,21 @@ class Warga extends Model
     public function getNamaSensorAttribute()
     {
     return substr($this->nama_lengkap, 0, 3) . '***';
+    }
+
+    public function mbg()
+    {
+    return $this->hasOne(PenerimaMbg::class);
+    }
+
+    public function bansos()
+    {
+    return $this->hasMany(PenerimaBansos::class);
+    }
+
+    public function kartuKeluarga()
+    {
+    return $this->belongsTo(KartuKeluarga::class, 'no_kk', 'no_kk');
     }
 
 }

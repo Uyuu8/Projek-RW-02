@@ -61,10 +61,10 @@
                 </select>
             </div>
 
-            <div class="form-group">
+            {{-- <div class="form-group">
                 <label>Alamat</label> <span class="text-danger">*</span>
                 <textarea name="alamat" class="form-control"></textarea>
-            </div>
+            </div> --}}
 
             <div class="row">
                 <div class="col-md-6">
@@ -95,12 +95,13 @@
                         <select name="pendidikan" class="form-control" required>
                             <option value="">-- Pilih Pendidikan --</option>
                             <option value="Tidak Sekolah">Tidak Sekolah</option>
-                            <option value="SD">SD</option>
-                            <option value="SMP">SMP</option>
-                            <option value="SMA/SMK">SMA/SMK</option>
+                            <option value="SD atau Sederajat">SD atau Sederajat</option>
+                            <option value="SMP atau Sederajat">SMP atau Sederajat</option>
+                            <option value="SMA/SMK atau Sederajat">SMA/SMK atau Sederajat</option>
                             <option value="D3">D3</option>
                             <option value="S1">S1</option>
                             <option value="S2">S2</option>
+                            <option value="S3">S3</option>
                         </select>
                     </div>
                 </div>
@@ -141,11 +142,6 @@
             <div class="form-group">
                 <label>Pekerjaan</label> <span class="text-danger">*</span>
                 <input type="text" name="pekerjaan" class="form-control">
-            </div>
-
-            <div class="form-group">
-                <label>No HP</label>
-                <input type="text" name="no_hp" class="form-control">
             </div>
 
             <div class="form-group">
