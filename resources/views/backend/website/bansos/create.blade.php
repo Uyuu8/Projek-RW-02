@@ -42,11 +42,6 @@
                     <input type="text" name="kategori_penerima" class="form-control" required>
                 </div>
 
-                <div class="col-md-6 mb-3">
-                    <label>Penerima</label>
-                    <input type="text" name="penerima" class="form-control" required>
-                </div>
-
             </div>
 
             <div class="mt-3">

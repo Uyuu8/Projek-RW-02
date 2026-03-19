@@ -28,7 +28,6 @@
                     <th>DISELENGGARAKAN OLEH</th>
                     <th>DISALURKAN MELALUI</th>
                     <th>KATEGORI PENERIMA</th>
-                    <th>PENERIMA</th>
                     <th>AKSI</th>
                 </tr>
             </thead>
@@ -42,8 +41,11 @@
                     <td>{{ $item->diselenggarakan_oleh }}</td>
                     <td>{{ $item->disalurkan_melalui }}</td>
                     <td>{{ $item->kategori_penerima }}</td>
-                    <td>{{ $item->penerima }}</td>
                     <td>
+                        <a href="{{ route('backend.website.bansos.penerima.index',$item->id) }}"
+                        class="btn btn-info btn-sm">
+                        Penerima
+                        </a>
                         <a href="{{ route('backend.website.bansos.edit', $item->id) }}"
                            class="btn btn-warning btn-sm">
                             Edit

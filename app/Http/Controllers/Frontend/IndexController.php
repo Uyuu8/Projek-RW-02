@@ -365,12 +365,13 @@ class IndexController extends Controller
             return [
                 'jumlah' => $items->count(),
                 'ts'  => $items->where('pendidikan','Tidak Sekolah')->count(),
-                'sd'  => $items->where('pendidikan','SD')->count(),
-                'smp' => $items->where('pendidikan','SMP')->count(),
-                'sma' => $items->where('pendidikan','SMA/SMK')->count(),
+                'sd'  => $items->where('pendidikan','SD atau Sederajat')->count(),
+                'smp' => $items->where('pendidikan','SMP atau Sederajat')->count(),
+                'sma' => $items->where('pendidikan','SMA/SMK atau Sederajat')->count(),
                 'd3'  => $items->where('pendidikan','D3')->count(),
                 's1'  => $items->where('pendidikan','S1')->count(),
                 's2'  => $items->where('pendidikan','S2')->count(),
+                's3'  => $items->where('pendidikan','S3')->count(),
             ];
         })
         ->sortKeys(SORT_NATURAL);
@@ -379,12 +380,13 @@ class IndexController extends Controller
         $total = [
             'jumlah' => $data->count(),
             'ts'  => $data->where('pendidikan','Tidak Sekolah')->count(),
-            'sd'  => $data->where('pendidikan','SD')->count(),
-            'smp' => $data->where('pendidikan','SMP')->count(),
-            'sma' => $data->where('pendidikan','SMA/SMK')->count(),
+            'sd'  => $data->where('pendidikan','SD atau Sederajat')->count(),
+            'smp' => $data->where('pendidikan','SMP atau Sederajat')->count(),
+            'sma' => $data->where('pendidikan','SMA/SMK atau Sederajat')->count(),
             'd3'  => $data->where('pendidikan','D3')->count(),
             's1'  => $data->where('pendidikan','S1')->count(),
             's2'  => $data->where('pendidikan','S2')->count(),
+            's3'  => $data->where('pendidikan','S3')->count(),
         ];
 
         return view('frontend.content.statistik.pendidikan', compact(

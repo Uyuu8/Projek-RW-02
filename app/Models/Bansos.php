@@ -18,7 +18,11 @@ class Bansos extends Model
         'diselenggarakan_oleh',
         'disalurkan_melalui',
         'kategori_penerima',
-        'penerima',
     ];
+
+    public function penerima()
+    {
+    return $this->hasMany(PenerimaBansos::class);
+    }
 }
 

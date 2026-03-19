@@ -32,21 +32,36 @@ class WargaController extends Controller
             });
         }
 
-        // 🏘️ FILTER RT
+        // FILTER RT
         if ($request->filled('rt')) {
-            $query->where('rt', $request->rt);
+            $query->whereIn('rt', $request->rt);
         }
 
-        // FILTER STATUS
-        if ($request->filled('status')) {
-            $query->where('status_warga', $request->status);
+        // FILTER JENIS KELAMIN
+        if ($request->filled('jenis_kelamin')) {
+            $query->whereIn('jenis_kelamin', $request->jenis_kelamin);
         }
 
-        $wargas = $query->orderBy('rt')
+        // FILTER STATUS WARGA
+        if ($request->filled('status_warga')) {
+            $query->whereIn('status_warga', $request->status_warga);
+        }
+
+        // FILTER STATUS RUMAH
+        if ($request->filled('status_rumah')) {
+            $query->whereIn('status_rumah', $request->status_rumah);
+        }
+
+        // FILTER AGAMA
+        if ($request->filled('agama')) {
+            $query->whereIn('agama', $request->agama);
+        }
+
+        $wargas = $query->with('kartuKeluarga')
+                        ->orderBy('rt')
                         ->orderBy('nama_lengkap')
                         ->paginate(10)
                         ->withQueryString();
-
 
         return view('backend.website.warga.index', compact('wargas', 'listRt'));
     }
@@ -77,7 +92,6 @@ class WargaController extends Controller
             'tempat_lahir'      => $request->tempat_lahir,
             'tanggal_lahir'     => $request->tanggal_lahir,
             'jenis_kelamin'     => $request->jenis_kelamin,
-            'alamat'            => $request->alamat,
             'rt'                => $request->rt,
             'rw'                => '02', // 🔒 AUTO
             'pendidikan'        => $request->pendidikan,
@@ -85,7 +99,6 @@ class WargaController extends Controller
             'status_keluarga'   => $request->status_keluarga,
             'status_perkawinan' => $request->status_perkawinan,
             'pekerjaan'         => $request->pekerjaan,
-            'no_hp'             => $request->no_hp,
             'status_rumah'      => $request->status_rumah,
             'status_warga'      => $request->status_warga,
         ]);
@@ -120,7 +133,6 @@ class WargaController extends Controller
             'tempat_lahir'      => $request->tempat_lahir,
             'tanggal_lahir'     => $request->tanggal_lahir,
             'jenis_kelamin'     => $request->jenis_kelamin,
-            'alamat'            => $request->alamat,
             'rt'                => $request->rt,
             'rw'                => '02', // 🔒 TETAP
             'no_kk'             => $request->no_kk,
@@ -129,7 +141,6 @@ class WargaController extends Controller
             'status_keluarga'   => $request->status_keluarga,
             'status_perkawinan' => $request->status_perkawinan,
             'pekerjaan'         => $request->pekerjaan,
-            'no_hp'             => $request->no_hp,
             'status_rumah'      => $request->status_rumah,
             'status_warga'      => $request->status_warga,
         ]);

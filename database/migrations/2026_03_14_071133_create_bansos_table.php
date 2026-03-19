@@ -15,7 +15,6 @@ return new class extends Migration {
             $table->string('diselenggarakan_oleh');
             $table->string('disalurkan_melalui');
             $table->string('kategori_penerima');
-            $table->string('penerima');
             $table->timestamps();
         });
     }

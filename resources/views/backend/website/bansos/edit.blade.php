@@ -80,15 +80,6 @@
                            required>
                 </div>
 
-                <div class="col-md-6 mb-3">
-                    <label>Penerima</label>
-                    <input type="text"
-                           name="penerima"
-                           class="form-control"
-                           value="{{ old('penerima', $bansos->penerima) }}"
-                           required>
-                </div>
-
             </div>
 
             <div class="mt-3">

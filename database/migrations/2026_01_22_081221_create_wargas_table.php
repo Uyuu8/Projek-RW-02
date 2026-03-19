@@ -20,18 +20,18 @@ class CreateWargasTable extends Migration
             $table->enum('jenis_kelamin', ['Laki-laki', 'Perempuan']);
             $table->string('tempat_lahir');
             $table->date('tanggal_lahir');
-            $table->text('alamat');
             $table->string('rt');
             $table->string('rw');
             $table->char('no_kk', 16)->nullable();
             $table->enum('pendidikan', [
                 'Tidak Sekolah',
-                'SD',
-                'SMP',
-                'SMA/SMK',
+                'SD atau Sederajat',
+                'SMP atau Sederajat',
+                'SMA/SMK atau Sederajat',
                 'D3',
                 'S1',
-                'S2'
+                'S2',
+                'S3'
             ])->nullable();
 
             $table->enum('agama', [
@@ -45,7 +45,6 @@ class CreateWargasTable extends Migration
             $table->string('status_keluarga'); // Kepala / Anggota
             $table->string('status_perkawinan');
             $table->string('pekerjaan')->nullable();
-            $table->string('no_hp')->nullable();
             $table->enum('status_rumah', ['Menetap', 'Kontrak'])->nullable();
             $table->enum('status_warga', ['Aktif', 'Pindah', 'Meninggal'])->default('Aktif');
             $table->timestamps();
