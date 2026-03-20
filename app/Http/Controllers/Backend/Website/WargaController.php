@@ -163,13 +163,47 @@ class WargaController extends Controller
 
     public function exportPdf(Request $request)
     {
-        $wargas = Warga::where('rw', '02')
-            ->when($request->rt, function ($query) use ($request) {
-                $query->where('rt', $request->rt);
-            })
-            ->orderBy('rt')
-            ->orderBy('nama_lengkap')
-            ->get();
+        $query = Warga::where('rw', '02');
+
+        // 🔍 SEARCH
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->where(function ($q) use ($search) {
+                $q->where('nama_lengkap', 'like', "%{$search}%")
+                ->orWhere('nik', 'like', "%{$search}%")
+                ->orWhere('no_kk', 'like', "%{$search}%")
+                ->orWhere('status_keluarga', 'like', "%{$search}%");
+            });
+        }
+
+        // RT
+        if ($request->filled('rt')) {
+            $query->whereIn('rt', (array) $request->rt);
+        }
+
+        // JENIS KELAMIN
+        if ($request->filled('jenis_kelamin')) {
+            $query->whereIn('jenis_kelamin', (array) $request->jenis_kelamin);
+        }
+
+        // STATUS WARGA
+        if ($request->filled('status_warga')) {
+            $query->whereIn('status_warga', (array) $request->status_warga);
+        }
+
+        // STATUS RUMAH
+        if ($request->filled('status_rumah')) {
+            $query->whereIn('status_rumah', (array) $request->status_rumah);
+        }
+
+        // AGAMA
+        if ($request->filled('agama')) {
+            $query->whereIn('agama', (array) $request->agama);
+        }
+
+        $wargas = $query->orderBy('rt')
+                        ->orderBy('nama_lengkap')
+                        ->get();
 
         $pdf = PDF::loadView(
             'backend.website.warga.export-pdf',
@@ -182,7 +216,7 @@ class WargaController extends Controller
     public function exportExcel(Request $request)
     {
         return Excel::download(
-            new WargaExport($request->rt),
+            new WargaExport($request->all()),
             'data-warga-rw-02.xlsx'
         );
     }

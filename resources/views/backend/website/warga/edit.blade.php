@@ -129,7 +129,7 @@
                             <label>Agama</label>
                             <select name="agama" class="form-control">
                                 <option value="">-- Pilih --</option>
-                                @foreach (['Islam','Kristen','Hindu','Buddha','Lainnya'] as $item)
+                                @foreach (['Islam','Kristen Protestan','Katolik','Hindu','Buddha','Konghucu','Lainnya'] as $item)
                                     <option value="{{ $item }}"
                                         {{ old('agama',$warga->agama)==$item?'selected':'' }}>
                                         {{ $item }}

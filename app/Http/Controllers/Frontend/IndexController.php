@@ -316,9 +316,11 @@ class IndexController extends Controller
             return [
                 'jumlah'  => $items->count(),
                 'islam'   => $items->where('agama','Islam')->count(),
-                'kristen' => $items->where('agama','Kristen')->count(),
+                'kristen protestan' => $items->where('agama','Kristen Protestan')->count(),
+                'katolik'   => $items->where('agama','Katolik')->count(),
                 'hindu'   => $items->where('agama','Hindu')->count(),
                 'buddha'  => $items->where('agama','Buddha')->count(),
+                'konghucu'   => $items->where('agama','Konghucu')->count(),
                 'lainnya' => $items->where('agama','Lainnya')->count(),
             ];
         })
@@ -328,9 +330,11 @@ class IndexController extends Controller
         $total = [
             'jumlah'  => $data->count(),
             'islam'   => $data->where('agama','Islam')->count(),
-            'kristen' => $data->where('agama','Kristen')->count(),
+            'kristen protestan' => $data->where('agama','Kristen Protestan')->count(),
+            'katolik'   => $data->where('agama','Katolik')->count(),
             'hindu'   => $data->where('agama','Hindu')->count(),
             'buddha'  => $data->where('agama','Buddha')->count(),
+            'konghucu'   => $data->where('agama','Konghucu')->count(),
             'lainnya' => $data->where('agama','Lainnya')->count(),
         ];
 
@@ -344,7 +348,7 @@ class IndexController extends Controller
         $rw = '02';
 
         $query = Warga::where('rw', $rw)
-                    ->where('status_warga', 'Aktif');;
+                    ->where('status_warga', 'Aktif');
 
         // FILTER RT
         if ($request->filled('rt')) {
