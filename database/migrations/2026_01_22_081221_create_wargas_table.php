@@ -36,9 +36,11 @@ class CreateWargasTable extends Migration
 
             $table->enum('agama', [
                 'Islam',
-                'Kristen',
+                'Kristen Protestan',
+                'Katolik',
                 'Hindu',
                 'Buddha',
+                'Konghucu',
                 'Lainnya'
             ])->nullable();
 

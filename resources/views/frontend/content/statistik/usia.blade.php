@@ -131,47 +131,53 @@
 <script>
 document.addEventListener("DOMContentLoaded", function () {
 
-    const ctx = document.getElementById('usiaChart');
+    const balita = ({{ $total['balita_l'] ?? 0 }} + {{ $total['balita_p'] ?? 0 }});
+    const anak = ({{ $total['anak_l'] ?? 0 }} + {{ $total['anak_p'] ?? 0 }});
+    const remaja = ({{ $total['remaja_l'] ?? 0 }} + {{ $total['remaja_p'] ?? 0 }});
+    const dewasa = ({{ $total['dewasa_l'] ?? 0 }} + {{ $total['dewasa_p'] ?? 0 }});
+    const lansia = ({{ $total['lansia_l'] ?? 0 }} + {{ $total['lansia_p'] ?? 0 }});
 
-    if (ctx) {
-        new Chart(ctx, {
-            type: 'pie',
-            data: {
-                labels: [
-                    'Balita',
-                    'Anak-anak',
-                    'Remaja',
-                    'Dewasa',
-                    'Lansia'
-                ],
-                datasets: [{
-                    data: [
-                        {{ $total['balita'] ?? 0 }},
-                        {{ $total['anak'] ?? 0 }},
-                        {{ $total['remaja'] ?? 0 }},
-                        {{ $total['dewasa'] ?? 0 }},
-                        {{ $total['lansia'] ?? 0 }}
-                    ],
-                    backgroundColor: [
-                        '#00cfe8',
-                        '#28c76f',
-                        '#ff9f43',
-                        '#7367f0',
-                        '#ea5455'
-                    ]
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        position: 'bottom'
+    new Chart(document.getElementById('usiaChart'), {
+        type: 'pie',
+        data: {
+            labels: [
+                'Balita',
+                'Anak-anak',
+                'Remaja',
+                'Dewasa',
+                'Lansia'
+            ],
+            datasets: [{
+                data: [balita, anak, remaja, dewasa, lansia],
+                backgroundColor: [
+                    '#00cfe8',
+                    '#28c76f',
+                    '#ff9f43',
+                    '#7367f0',
+                    '#ea5455'
+                ]
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'bottom'
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            let total = context.dataset.data.reduce((a, b) => a + b, 0);
+                            let value = context.raw;
+                            let percent = total ? ((value / total) * 100).toFixed(1) : 0;
+                            return `${context.label}: ${value} (${percent}%)`;
+                        }
                     }
                 }
             }
-        });
-    }
+        }
+    });
 
 });
 </script>

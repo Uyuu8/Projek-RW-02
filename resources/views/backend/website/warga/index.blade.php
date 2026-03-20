@@ -380,7 +380,7 @@ RT {{ $rt }}
 name="status_warga[]"
 value="{{ $status }}"
 class="form-check-input"
-{{ in_array($status, request('status', [])) ? 'checked' : '' }}>
+{{ in_array($status, request('status_warga', [])) ? 'checked' : '' }}>
 
 <label class="form-check-label">
 {{ $status }}
@@ -471,7 +471,7 @@ class="form-check-input"
 
 <h6>Agama</h6>
 
-@foreach(['Islam','Kristen','Hindu','Buddha','Lainnya'] as $agama)
+@foreach(['Islam','Kristen Protestan','Katolik','Hindu','Buddha','Konghucu','Lainnya'] as $agama)
 
 <div class="form-check">
 

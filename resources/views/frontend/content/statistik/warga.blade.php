@@ -64,6 +64,7 @@
 
     {{-- PIE CHART --}}
     <div class="chart-wrapper mt-4">
+
         <div class="chart-item">
             <canvas id="genderChart"></canvas>
             <p class="chart-title">Jenis Kelamin</p>
@@ -73,6 +74,7 @@
             <canvas id="statusChart"></canvas>
             <p class="chart-title">Status Warga</p>
         </div>
+
     </div>
 
 </div>
@@ -82,54 +84,75 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>
-new Chart(document.getElementById('genderChart'), {
-    type: 'pie',
-    data: {
-        labels: ['Laki-laki', 'Perempuan'],
-        datasets: [{
-            data: [{{ $total['laki'] }}, {{ $total['perempuan'] }}],
-            backgroundColor: ['#00cfe8', '#7367f0']
-        }]
-    },
-    options: {
-        responsive: true,
-        maintainAspectRatio: false
-    }
-});
+document.addEventListener("DOMContentLoaded", function () {
 
-new Chart(document.getElementById('statusChart'), {
-    type: 'pie',
-    data: {
-        labels: ['Warga Tetap', 'Warga Tidak Tetap'],
-        datasets: [{
-            data: [{{ $total['tetap'] }}, {{ $total['tidak_tetap'] }}],
-            backgroundColor: ['#28c76f', '#ea5455']
-        }]
-    },
-    options: {
-        responsive: true,
-        maintainAspectRatio: false
-    }
+    // ===== DATA AMAN =====
+    const laki = {{ $total['laki'] ?? 0 }};
+    const perempuan = {{ $total['perempuan'] ?? 0 }};
+    const tetap = {{ $total['tetap'] ?? 0 }};
+    const tidakTetap = {{ $total['tidak_tetap'] ?? 0 }};
+
+    // ===== CHART GENDER =====
+    new Chart(document.getElementById('genderChart'), {
+        type: 'pie',
+        data: {
+            labels: ['Laki-laki', 'Perempuan'],
+            datasets: [{
+                data: [laki, perempuan],
+                backgroundColor: ['#00cfe8', '#7367f0']
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'bottom'
+                }
+            }
+        }
+    });
+
+    // ===== CHART STATUS =====
+    new Chart(document.getElementById('statusChart'), {
+        type: 'pie',
+        data: {
+            labels: ['Warga Tetap', 'Warga Tidak Tetap'],
+            datasets: [{
+                data: [tetap, tidakTetap],
+                backgroundColor: ['#28c76f', '#ea5455']
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'bottom'
+                }
+            }
+        }
+    });
+
 });
 </script>
 
-{{-- <style>
-/* ===== PIE CHART RESPONSIVE FIX ===== */
+<style>
 .chart-wrapper {
     display: flex;
     justify-content: center;
-    gap: 24px;
-    flex-wrap: nowrap; /* Biar HP tetap sejajar */
+    gap: 20px;
+    flex-wrap: nowrap; /* HP tetap sejajar */
 }
 
 .chart-item {
-    width: 150px;
+    width: 160px;
     text-align: center;
 }
 
 .chart-item canvas {
-    width: 150px !important;
-    height: 150px !important;
+    width: 160px !important;
+    height: 160px !important;
 }
 
 .chart-title {
@@ -141,13 +164,13 @@ new Chart(document.getElementById('statusChart'), {
 /* DESKTOP */
 @media (min-width: 768px) {
     .chart-item {
-        width: 220px;
+        width: 250px;
     }
 
     .chart-item canvas {
-        width: 220px !important;
-        height: 220px !important;
+        width: 250px !important;
+        height: 250px !important;
     }
 }
 </style>
-@endpush --}}
+@endpush

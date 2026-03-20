@@ -32,9 +32,11 @@
                     <th>RT</th>
                     <th>Jumlah</th>
                     <th>Islam</th>
-                    <th>Kristen</th>
+                    <th>Kristen Protestan</th>
+                    <th>Katolik</th>
                     <th>Hindu</th>
                     <th>Buddha</th>
+                    <th>Konghucu</th>
                     <th>Lainnya</th>
                 </tr>
             </thead>
@@ -45,9 +47,11 @@
                     <td>{{ $rt }}</td>
                     <td>{{ $row['jumlah'] }}</td>
                     <td>{{ $row['islam'] }}</td>
-                    <td>{{ $row['kristen'] }}</td>
+                    <td>{{ $row['kristen protestan'] }}</td>
+                    <td>{{ $row['katolik'] }}</td>
                     <td>{{ $row['hindu'] }}</td>
                     <td>{{ $row['buddha'] }}</td>
+                    <td>{{ $row['konghucu'] }}</td>
                     <td>{{ $row['lainnya'] }}</td>
                 </tr>
                 @endforeach
@@ -56,9 +60,11 @@
                     <td colspan="2">JUMLAH</td>
                     <td>{{ $total['jumlah'] }}</td>
                     <td>{{ $total['islam'] }}</td>
-                    <td>{{ $total['kristen'] }}</td>
+                    <td>{{ $total['kristen protestan'] }}</td>
+                    <td>{{ $total['katolik'] }}</td>
                     <td>{{ $total['hindu'] }}</td>
                     <td>{{ $total['buddha'] }}</td>
+                    <td>{{ $total['konghucu'] }}</td>
                     <td>{{ $total['lainnya'] }}</td>
                 </tr>
             </tbody>
@@ -83,13 +89,15 @@
 new Chart(document.getElementById('agamaChart'), {
     type: 'pie',
     data: {
-        labels: ['Islam','Kristen','Hindu','Buddha','Lainnya'],
+        labels: ['Islam','Kristen Protestan','Katolik','Hindu','Buddha','Konghucu','Lainnya'],
         datasets: [{
             data: [
                 {{ $total['islam'] }},
-                {{ $total['kristen'] }},
+                {{ $total['kristen protestan'] }},
+                {{ $total['katolik'] }},
                 {{ $total['hindu'] }},
                 {{ $total['buddha'] }},
+                {{ $total['konghucu'] }},
                 {{ $total['lainnya'] }}
             ],
             backgroundColor: [
